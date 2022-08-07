@@ -1,0 +1,273 @@
+.contact-page {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.contact-header {
+  font-size: 50px;
+  color: white;
+  letter-spacing: 5px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.contact-container {
+  margin-top: 3rem;
+  width: 80%;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+}
+
+.form-container {
+  height: 100%;
+  width: 50%;
+  padding: 0 20px;
+}
+
+.sender {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.name-container,
+.mail-container,
+.subject-container,
+.message-container {
+  position: relative;
+}
+
+.underline-animation {
+  transition: all 0.5s;
+  display: inline-block;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, #0162c8, #41c7db);
+}
+
+.text-inputs:focus + .underline-animation {
+  width: 100%;
+}
+
+textarea:focus + .underline-animation {
+  width: 100%;
+}
+
+.text-inputs {
+  font-family: "Montserrat", sans-serif;
+  position: relative;
+  border: none;
+  color: rgb(230, 230, 230);
+  background-color: #2b2b2b;
+  font-size: 15px;
+  width: 260px;
+  height: 40px;
+  outline: none;
+  padding: 0 15px;
+}
+
+textarea::placeholder,
+.text-inputs::placeholder {
+  color: rgb(122, 122, 122);
+}
+
+.subject {
+  width: 100%;
+}
+
+.subject-container {
+  margin-bottom: 1rem;
+}
+
+textarea {
+  outline: none;
+  border: none;
+  color: rgb(230, 230, 230);
+  font-size: 16px;
+  padding: 7px 15px;
+  font-family: "Montserrat", sans-serif;
+  resize: none;
+  width: 100%;
+  height: 225px;
+  background-color: #2b2b2b;
+}
+
+textarea::-webkit-scrollbar {
+  display: none;
+}
+
+textarea {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Send Button */
+
+.submit-btn {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+  width: 100%;
+  height: 40px;
+}
+
+.send-btn {
+  border: none;
+  border-radius: 20px;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  width: 20%;
+  background: linear-gradient(90deg, #755bea, #ff72c0);
+  text-transform: uppercase;
+}
+
+.send-btn:hover {
+  transform: scale(1.05);
+  transition-duration: 300ms;
+}
+
+/*  Socials */
+
+.socials {
+  position: relative;
+  font-family: "Montserrat", sans-serif;
+  height: 100%;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 25px;
+  border-style: solid;
+  border-image: linear-gradient(
+      300deg,
+      #5e91dc 20%,
+      #fffadc 20%,
+      #fffadc 40%,
+      #d40055 40%,
+      #d40055 60%,
+      #fffadc 60%,
+      #fffadc 80%,
+      #5e91dc 80%
+    )
+    6/6px;
+}
+
+.para {
+  width: 80%;
+  margin-bottom: 1rem;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: justify;
+}
+
+.social-icons {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 150px;
+  display: flex;
+  justify-content: space-around;
+  font-size: 25px;
+}
+
+.fa-heart {
+  color: #d40055;
+}
+
+.fa-comment {
+  color: #fffadc;
+}
+
+.fa-share {
+  color: #5e91dc;
+}
+
+.social-menu ul {
+  margin: 20px 0;
+  display: flex;
+}
+
+.social-menu ul li {
+  list-style: none;
+  margin: 0 15px;
+}
+
+.social-menu ul li .handles-icon {
+  font-size: 30px;
+  line-height: 60px;
+  transition: 0.3s;
+  color: #000;
+}
+
+.social-menu ul li a:hover i {
+  color: #fff;
+}
+
+.social-menu ul li a {
+  position: relative;
+  display: block;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #fff;
+  text-align: center;
+  transition: 0.6s;
+  box-shadow: 0 5px 4px rgba(118, 118, 118, 0.689);
+}
+
+.social-menu ul li a:hover {
+  transform: translate(0, -10%);
+}
+
+.social-menu ul li:nth-child(2) a:hover {
+  background-color: #1cceff;
+}
+
+.social-menu ul li:nth-child(3) a:hover {
+  background: radial-gradient(
+      circle farthest-corner at 35% 90%,
+      #fec564,
+      transparent 50%
+    ),
+    radial-gradient(circle farthest-corner at 0 140%, #fec564, transparent 50%),
+    radial-gradient(ellipse farthest-corner at 0 -25%, #5258cf, transparent 50%),
+    radial-gradient(
+      ellipse farthest-corner at 20% -50%,
+      #5258cf,
+      transparent 50%
+    ),
+    radial-gradient(ellipse farthest-corner at 100% 0, #893dc2, transparent 50%),
+    radial-gradient(
+      ellipse farthest-corner at 60% -20%,
+      #893dc2,
+      transparent 50%
+    ),
+    radial-gradient(ellipse farthest-corner at 100% 100%, #d9317a, transparent),
+    linear-gradient(
+      #6559ca,
+      #bc318f 30%,
+      #e33f5f 50%,
+      #f77638 70%,
+      #fec66d 100%
+    );
+}
+
+.social-menu ul li:nth-child(1) a:hover {
+  background-color: #0077b5;
+}
+
+.social-menu ul li:nth-child(4) a:hover {
+  background-color: rgb(41, 41, 41);
+}
