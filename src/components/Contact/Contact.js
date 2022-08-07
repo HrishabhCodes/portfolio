@@ -1,9 +1,11 @@
 import React from "react";
+import Loading from "../Loading/Loading";
 import "./Contact.css";
 
 const Contact = () => {
   return (
     <div className="contact-page">
+      <Loading />
       <h1 className="contact-header">GET IN TOUCH</h1>
       <div className="contact-container">
         <div className="form-container">
@@ -66,7 +68,8 @@ const Contact = () => {
               <li>
                 <a
                   href="https://www.linkedin.com/in/hrishabh-jain/"
-                  target="blank"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <i className="handles-icon fa-brands fa-linkedin"></i>
                 </a>
@@ -77,40 +80,26 @@ const Contact = () => {
                 </a>
               </li>
               <li>
-                <a href="https://www.instagram.com/hrishabh.hj/" target="blank">
+                <a
+                  href="https://www.instagram.com/hrishabh.hj/"
+                  rel="noopener noreferrer"
+                  target="blank"
+                >
                   <i className="handles-icon fa-brands fa-instagram"></i>
                 </a>
               </li>
 
               <li>
-                <a target="_blank" href="mailto:hrishabh507@gmail.com">
+                <a
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  href="mailto:hrishabh507@gmail.com"
+                >
                   <i className="handles-icon fa-solid fa-envelope"></i>
                 </a>
               </li>
             </ul>
           </div>
-          {/* <div className="handles">
-            <a className="linkedin" href="/">
-              <i className="handles-icon fa-brands fa-linkedin"></i>
-              <p>LinkedIn</p>
-            </a>
-            <a className="instagram" href="/">
-              <i className="handles-icon fa-brands fa-instagram"></i>
-              <p>Instagram</p>
-            </a>
-            <a className="twitter" href="/">
-              <i className="handles-icon fa-brands fa-twitter"></i>
-              <p>Twitter</p>
-            </a>
-            <a className="envelope" href="/">
-              <i className="handles-icon fa-solid fa-envelope"></i>
-              <p>Mail</p>
-            </a>
-            <a className="phone" href="/">
-              <i className="handles-icon fa-solid fa-phone"></i>
-              <p>Phone</p>
-            </a>
-          </div> */}
           <div className="social-icons">
             <i className="fa-solid fa-heart"></i>
             <i className="fa-solid fa-comment"></i>

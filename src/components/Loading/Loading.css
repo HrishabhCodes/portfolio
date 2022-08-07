@@ -1,0 +1,96 @@
+.loading-page {
+  z-index: 2;
+  position: absolute;
+  width: 100vw;
+  background-color: rgb(26, 41, 49);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.enter {
+  animation: movein;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in-out;
+  animation-duration: 500ms;
+}
+
+.exit {
+  animation: moveout;
+  animation-timing-function: ease-in-out;
+  animation-duration: 500ms;
+  animation-fill-mode: forwards;
+}
+
+.logo-container {
+  height: 100px;
+  width: 100px;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-img img {
+  height: 50px;
+}
+
+.logo-container .name {
+  font-family: "Montserrat", sans-serif;
+  text-transform: uppercase;
+  font-weight: 400;
+  letter-spacing: 2px;
+  color: white;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.progress-container {
+  position: relative;
+  margin-top: 0.5rem;
+  height: 4px;
+  width: 30%;
+  background-color: rgb(43, 59, 67);
+}
+
+.progress-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  height: 4px;
+  background: linear-gradient(#0162c8, #55e7fc);
+  animation: loading;
+  animation-timing-function: ease-in-out;
+  animation-delay: 500ms;
+  animation-duration: 700ms;
+  animation-fill-mode: forwards;
+}
+
+@keyframes loading {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes movein {
+  0% {
+    transform: translateX(-100vw);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes moveout {
+  0% {
+    transform: translateX(0vw);
+  }
+  100% {
+    transform: translateX(100vw);
+  }
+}

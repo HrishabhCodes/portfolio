@@ -7,11 +7,10 @@ import {
 } from "react-router-dom";
 import Projects from "./components/Projects/Projects";
 import Contact from "./components/Contact/Contact";
+import Home from "./components/Home/Home";
 import { useState } from "react";
 import Logo from "./assets/logo.png";
 import "./App.css";
-
-import Home from "./components/Home/Home";
 
 function App() {
   const [showNavbar, setShowNavbar] = useState(false);
@@ -96,7 +95,7 @@ function App() {
             </ul>
           </div>
         </div>
-        {/* <Navbar />  */}
+
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/projects" element={<Projects />}></Route>
