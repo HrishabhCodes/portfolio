@@ -4,7 +4,7 @@ import "./Contact.css";
 const Contact = () => {
   return (
     <div className="contact-page">
-      <h1 className="contact-header">CONTACT ME</h1>
+      <h1 className="contact-header">GET IN TOUCH</h1>
       <div className="contact-container">
         <div className="form-container">
           <form className="form">
@@ -16,7 +16,7 @@ const Contact = () => {
                   className="text-inputs name"
                   type="text"
                 />
-                <span class="underline-animation"></span>
+                <span className="underline-animation"></span>
               </div>
               <div className="mail-container">
                 <input
@@ -25,7 +25,7 @@ const Contact = () => {
                   className="text-inputs mail"
                   type="text"
                 />
-                <span class="underline-animation"></span>
+                <span className="underline-animation"></span>
               </div>
             </div>
             <div className="subject-container">
@@ -35,7 +35,7 @@ const Contact = () => {
                 className="text-inputs subject"
                 type="text"
               />
-              <span class="underline-animation"></span>
+              <span className="underline-animation"></span>
             </div>
             <div className="message-container">
               <textarea
@@ -47,7 +47,7 @@ const Contact = () => {
                 cols="30"
                 rows="10"
               ></textarea>
-              <span class="underline-animation"></span>
+              <span className="underline-animation"></span>
             </div>
             <div className="submit-btn">
               <input value="Send" className="send-btn" type="submit" />
@@ -61,60 +61,60 @@ const Contact = () => {
             through the middle of nowhere. I'll get back to you as soon as I
             can. That's a promise!
           </div>
-          <div class="social-menu">
+          <div className="social-menu">
             <ul>
               <li>
                 <a
                   href="https://www.linkedin.com/in/hrishabh-jain/"
                   target="blank"
                 >
-                  <i class="handles-icon fa-brands fa-linkedin"></i>
+                  <i className="handles-icon fa-brands fa-linkedin"></i>
                 </a>
               </li>
               <li>
                 <a href="https://twitter.com/hrishabhcodes" target="blank">
-                  <i class="handles-icon fa-brands fa-twitter"></i>
+                  <i className="handles-icon fa-brands fa-twitter"></i>
                 </a>
               </li>
               <li>
                 <a href="https://www.instagram.com/hrishabh.hj/" target="blank">
-                  <i class="handles-icon fa-brands fa-instagram"></i>
+                  <i className="handles-icon fa-brands fa-instagram"></i>
                 </a>
               </li>
 
               <li>
                 <a target="_blank" href="mailto:hrishabh507@gmail.com">
-                  <i class="handles-icon fa-solid fa-envelope"></i>
+                  <i className="handles-icon fa-solid fa-envelope"></i>
                 </a>
               </li>
             </ul>
           </div>
           {/* <div className="handles">
             <a className="linkedin" href="/">
-              <i class="handles-icon fa-brands fa-linkedin"></i>
+              <i className="handles-icon fa-brands fa-linkedin"></i>
               <p>LinkedIn</p>
             </a>
             <a className="instagram" href="/">
-              <i class="handles-icon fa-brands fa-instagram"></i>
+              <i className="handles-icon fa-brands fa-instagram"></i>
               <p>Instagram</p>
             </a>
             <a className="twitter" href="/">
-              <i class="handles-icon fa-brands fa-twitter"></i>
+              <i className="handles-icon fa-brands fa-twitter"></i>
               <p>Twitter</p>
             </a>
             <a className="envelope" href="/">
-              <i class="handles-icon fa-solid fa-envelope"></i>
+              <i className="handles-icon fa-solid fa-envelope"></i>
               <p>Mail</p>
             </a>
             <a className="phone" href="/">
-              <i class="handles-icon fa-solid fa-phone"></i>
+              <i className="handles-icon fa-solid fa-phone"></i>
               <p>Phone</p>
             </a>
           </div> */}
           <div className="social-icons">
-            <i class="fa-solid fa-heart"></i>
-            <i class="fa-solid fa-comment"></i>
-            <i class="fa-solid fa-share"></i>
+            <i className="fa-solid fa-heart"></i>
+            <i className="fa-solid fa-comment"></i>
+            <i className="fa-solid fa-share"></i>
           </div>
         </div>
       </div>

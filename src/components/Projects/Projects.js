@@ -28,7 +28,7 @@ const Projects = () => {
   };
 
   return (
-    <div className="container">
+    <div className="proj-container">
       {loading ? (
         <div className="transition">
           <div className="bar1 bars"></div>
@@ -48,10 +48,10 @@ const Projects = () => {
               onClick={(e) => handleProjects(i)}
               className={i === project ? "active circle" : "circle"}
             >
-              <span class="icon">
-                <i class={pro.classes}></i>
+              <span className="icon">
+                <i className={pro.classes}></i>
               </span>
-              <span class="title">{pro.name}</span>
+              <span className="title">{pro.name}</span>
             </li>
           );
         })}
@@ -61,11 +61,11 @@ const Projects = () => {
         <h1 className="proj-name">{projects[project].name}</h1>
         <div className="proj-links">
           <a target="_blank" href={projects[project].code} className="btn code">
-            <i class="fa-brands fa-github"></i>
+            <i className="fa-brands fa-github"></i>
             CODE
           </a>
           <a target="_blank" href={projects[project].live} className="btn live">
-            <i class="fa-solid fa-globe"></i>
+            <i className="fa-solid fa-globe"></i>
             LIVE
           </a>
         </div>
