@@ -13,6 +13,7 @@ const Contact = () => {
             <div className="sender">
               <div className="name-container">
                 <input
+                  autoComplete="none"
                   required
                   placeholder="Name"
                   className="text-inputs name"
@@ -22,6 +23,7 @@ const Contact = () => {
               </div>
               <div className="mail-container">
                 <input
+                  autoComplete="none"
                   required
                   placeholder="Email"
                   className="text-inputs mail"
@@ -32,6 +34,7 @@ const Contact = () => {
             </div>
             <div className="subject-container">
               <input
+                autoComplete="none"
                 required
                 placeholder="Subject"
                 className="text-inputs subject"
@@ -41,6 +44,7 @@ const Contact = () => {
             </div>
             <div className="message-container">
               <textarea
+                autoComplete="none"
                 required
                 placeholder="Message"
                 className="message"
