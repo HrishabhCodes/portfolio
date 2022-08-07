@@ -9,7 +9,7 @@ const Loading = () => {
   useEffect(() => {
     time = setInterval(() => {
       setLoad("exit");
-    }, 1300);
+    }, 1400);
 
     return () => {
       clearInterval(time);

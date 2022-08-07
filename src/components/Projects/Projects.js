@@ -10,7 +10,7 @@ const Projects = () => {
   useEffect(() => {
     time = setInterval(() => {
       setLoading(false);
-    }, 2500);
+    }, 1800);
 
     return () => {
       clearInterval(time);
@@ -24,7 +24,7 @@ const Projects = () => {
 
     setTimeout(() => {
       setProject(number);
-    }, 1200);
+    }, 900);
   };
 
   return (

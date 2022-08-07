@@ -2,3 +2,159 @@
   height: 100vh;
   width: 100vw;
 }
+
+.bg-container {
+  font-family: "Yanone Kaffeesatz", sans-serif;
+  text-transform: uppercase;
+  z-index: -1;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  color: rgba(91, 91, 91, 0.2);
+  font-size: 85vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about {
+  color: rgba(91, 91, 91, 0.2);
+  background-color: black;
+  animation: aboutin;
+  animation-timing-function: ease-out;
+  animation-duration: 200ms;
+  animation-fill-mode: forwards;
+}
+
+.skills {
+  background-color: rgba(91, 91, 91, 0.2);
+  color: black;
+  animation: skillsin;
+  animation-timing-function: ease-out;
+  animation-duration: 200ms;
+  animation-fill-mode: forwards;
+}
+
+@keyframes skillsin {
+  0% {
+    transform: translateY(100vh);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes aboutin {
+  0% {
+    transform: translateY(100vh);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.about-section {
+  z-index: 1;
+  font-family: "Montserrat", sans-serif;
+  color: rgb(224, 224, 224);
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-weight: 700;
+  font-size: 70px;
+  padding: 0 50px;
+  margin: 0 auto;
+}
+
+.about-section p.info-para span {
+  color: rgb(255, 97, 150) !important;
+  display: inline-block;
+}
+/* 
+.animate {
+  animation: fade-in 2500ms forwards,
+    pop-in 2500ms forwards cubic-bezier(0.64, 1.87, 0.64, 0.64);
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes pop-in {
+  0% {
+    transform: scale(0.7);
+  }
+  20% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1);
+  }
+} */
+
+.skills-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 50px;
+  height: 100vh;
+  width: 100vw;
+}
+
+.skills-list {
+  flex-wrap: wrap;
+  height: 50%;
+  width: 90%;
+}
+
+.skills-list,
+.skill-cont,
+.skill-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.skill-cont {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  color: white;
+  flex-direction: column;
+  width: 150px;
+  margin: 1rem 2rem;
+}
+
+.skill-cont:hover {
+  transform: scale(1.2);
+  transition-duration: 500ms;
+}
+.skill-cont:hover .skill-name {
+  color: rgb(255, 97, 150);
+}
+
+.skill-cont .skill-name {
+  margin-top: 5px;
+}
+
+.skill-img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.skill-img img {
+  width: 50px;
+}
