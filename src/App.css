@@ -6,6 +6,20 @@
   box-sizing: border-box;
 }
 
+body::-webkit-scrollbar {
+  width: 13px; /* width of the entire scrollbar */
+}
+
+body::-webkit-scrollbar-track {
+  background: rgb(0, 0, 0); /* color of the tracking area */
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.346); /* color of the scroll thumb */
+  border-radius: 20px; /* roundness of the scroll thumb */
+  border: 3px solid rgb(0, 0, 0); /* creates padding around scroll thumb */
+}
+
 body {
   background-color: black;
   overflow-x: hidden;
@@ -199,10 +213,10 @@ body {
 .nav__list-item a:hover {
   color: rgba(255, 255, 255, 1);
 }
-.nav__list-item.active-nav a {
+.nav__list-item a.active {
   color: rgba(255, 255, 255, 1);
 }
-.nav__list-item.active-nav a:after {
+.nav__list-item a.active:after {
   height: 4px;
   opacity: 1;
   left: 0;

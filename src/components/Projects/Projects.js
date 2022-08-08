@@ -45,6 +45,7 @@ const Projects = () => {
         {projects.map((pro, i) => {
           return (
             <li
+              key={i}
               onClick={(e) => handleProjects(i)}
               className={i === project ? "active circle" : "circle"}
             >

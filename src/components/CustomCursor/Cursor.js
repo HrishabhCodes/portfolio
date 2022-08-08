@@ -5,8 +5,8 @@ const Cursor = ({ click }) => {
   const secondaryCursor = useRef(null);
   const mainCursor = useRef(null);
   const positionRef = useRef({
-    mouseX: 0,
-    mouseY: 0,
+    mouseX: -30,
+    mouseY: -30,
     destinationX: 0,
     destinationY: 0,
     distanceX: 0,

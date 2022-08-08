@@ -77,7 +77,7 @@ const Home = () => {
   useEffect(() => {
     time = setInterval(() => {
       setAbout((prev) => prev + 1);
-    }, 3000);
+    }, 5000);
 
     return () => {
       clearInterval(time);
@@ -88,7 +88,7 @@ const Home = () => {
     <div style={{ overflow: loader && "hidden" }} className="home-page">
       <Loading />
       <div className={`${section} bg-container`}>{section}</div>
-      <div className="about-section">
+      <div className="sections about-section">
         <p className="info-para">
           I am a{" "}
           <span>
@@ -104,7 +104,7 @@ const Home = () => {
                 animationType="lights"
                 interval={0.01}
                 duration={0.6}
-                tag="p"
+                tag="span"
                 className="animated-paragraph"
                 includeWhiteSpaces
                 threshold={0.1}
@@ -124,7 +124,7 @@ const Home = () => {
                 animationType="lights"
                 interval={0.01}
                 duration={0.6}
-                tag="p"
+                tag="span"
                 className="animated-paragraph"
                 includeWhiteSpaces
                 threshold={0.1}
@@ -140,11 +140,11 @@ const Home = () => {
         </p>
       </div>
 
-      <div className="skills-section">
+      <div className="sections skills-section">
         <div className="skills-list">
           {skills.map((skill, i) => {
             return (
-              <div className="skill-cont">
+              <div key={i} className="skill-cont">
                 <div className="skill-img">
                   <img src={skill.url} alt={skill.name} />
                 </div>

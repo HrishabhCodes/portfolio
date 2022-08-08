@@ -1,18 +1,46 @@
-import React from "react";
+import React, { useRef } from "react";
+import emailjs from "@emailjs/browser";
 import Loading from "../Loading/Loading";
 import "./Contact.css";
 
+const YOUR_SERVICE_ID = process.env.REACT_APP_SERVICE_ID;
+const YOUR_TEMPLATE_ID = process.env.REACT_APP_TEMPLATE_ID;
+const YOUR_PUBLIC_KEY = process.env.REACT_APP_PUBLIC_KEY;
+
 const Contact = () => {
+  const form = useRef();
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm(
+        `${YOUR_SERVICE_ID}`,
+        `${YOUR_TEMPLATE_ID}`,
+        form.current,
+        `${YOUR_PUBLIC_KEY}`
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+  };
+
   return (
     <div className="contact-page">
       <Loading />
       <h1 className="contact-header">GET IN TOUCH</h1>
       <div className="contact-container">
         <div className="form-container">
-          <form className="form">
+          <form ref={form} onSubmit={sendEmail} className="form">
             <div className="sender">
               <div className="name-container">
                 <input
+                  name="user_name"
                   autoComplete="none"
                   required
                   placeholder="Name"
@@ -23,6 +51,7 @@ const Contact = () => {
               </div>
               <div className="mail-container">
                 <input
+                  name="user_email"
                   autoComplete="none"
                   required
                   placeholder="Email"
@@ -34,6 +63,7 @@ const Contact = () => {
             </div>
             <div className="subject-container">
               <input
+                name="subject"
                 autoComplete="none"
                 required
                 placeholder="Subject"

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -6,7 +6,6 @@ import {
   NavLink,
   Link,
 } from "react-router-dom";
-import AnimatedCursor from "react-animated-cursor";
 import Cursor from "./components/CustomCursor/Cursor";
 import Projects from "./components/Projects/Projects";
 import Contact from "./components/Contact/Contact";
@@ -17,7 +16,14 @@ import "./App.css";
 function App() {
   const [showNavbar, setShowNavbar] = useState(false);
   const [click, setClick] = useState(false);
-  const [active, setActive] = useState("home");
+
+  const navbar = () => {
+    if (showNavbar) setShowNavbar(false);
+    else setShowNavbar(true);
+  };
+
+  const handleClick = useMemo(() => setClick(true), [click]);
+  const handleNav = useMemo(() => navbar, [showNavbar]);
 
   useEffect(() => {
     if (click) {
@@ -27,18 +33,9 @@ function App() {
     }
   }, [click]);
 
-  const toggleNav = (page) => {
-    if (page === "home-logo") {
-      setActive(page.substring(0, 4));
-      return;
-    }
-    setActive(page);
-    setShowNavbar(!showNavbar);
-  };
-
   return (
     <div
-      onMouseDown={() => setClick(true)}
+      onMouseDown={handleClick}
       id="app"
       className={showNavbar ? "nav-active app" : "app"}
     >
@@ -47,11 +44,11 @@ function App() {
         <header className="cd-header">
           <div className="header-wrapper">
             <div className="logo-wrap">
-              <Link onClick={() => toggleNav("home-logo")} to="/">
-                <img src={Logo} alt="" />
+              <Link to="/">
+                <img src={Logo} alt="logo" />
               </Link>
             </div>
-            <div onClick={() => toggleNav(active)} className="nav-but-wrap">
+            <div onClick={handleNav} className="nav-but-wrap">
               <div className="menu-icon">
                 <span className="menu-icon__line menu-icon__line-left"></span>
                 <span className="menu-icon__line"></span>
@@ -63,45 +60,23 @@ function App() {
         <div className="nav">
           <div className="nav__content">
             <ul className="nav__list">
-              <li
-                className={
-                  active === "home"
-                    ? "nav__list-item active-nav"
-                    : "nav__list-item"
-                }
-              >
-                <NavLink
-                  onClick={() => toggleNav("home")}
-                  to="/"
-                  className="hover-target"
-                >
+              <li className="nav__list-item">
+                <NavLink onClick={handleNav} to="/" className="hover-target">
                   Home
                 </NavLink>
               </li>
-              <li
-                className={
-                  active === "projects"
-                    ? "nav__list-item active-nav"
-                    : "nav__list-item"
-                }
-              >
+              <li className="nav__list-item">
                 <NavLink
-                  onClick={() => toggleNav("projects")}
+                  onClick={handleNav}
                   to="/projects"
                   className="hover-target"
                 >
                   Projects
                 </NavLink>
               </li>
-              <li
-                className={
-                  active === "contact"
-                    ? "nav__list-item active-nav"
-                    : "nav__list-item"
-                }
-              >
+              <li className="nav__list-item">
                 <NavLink
-                  onClick={() => toggleNav("contact")}
+                  onClick={handleNav}
                   to="/contact"
                   className="hover-target"
                 >
