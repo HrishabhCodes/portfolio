@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AnimatedText from "react-animated-text-content";
+import Particle from "../Contact/Particle";
 import Loading from "../Loading/Loading";
 import "./Home.css";
 
@@ -87,6 +88,7 @@ const Home = () => {
   return (
     <div style={{ overflow: loader && "hidden" }} className="home-page">
       <Loading />
+      <Particle />
       <div className={`${section} bg-container`}>{section}</div>
       <div className="sections about-section">
         <p className="info-para">

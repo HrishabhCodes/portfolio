@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { projects } from "./projectsList";
 import "./Projects.css";
+import Particle from "../Contact/Particle";
 
 const Projects = () => {
   const [loading, setLoading] = useState(true);
@@ -29,6 +30,7 @@ const Projects = () => {
 
   return (
     <div className="proj-container">
+      <Particle />
       {loading ? (
         <div className="transition">
           <div className="bar1 bars"></div>

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import Loading from "../Loading/Loading";
+import Particles from "./Particle";
 import "./Contact.css";
 
 const YOUR_SERVICE_ID = process.env.REACT_APP_SERVICE_ID;
@@ -45,6 +46,7 @@ const Contact = () => {
   return (
     <div className="contact-page">
       <Loading />
+      <Particles />
       <h1 className="contact-header">GET IN TOUCH</h1>
       <div className="contact-container">
         <div className="form-container">
