@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -5,16 +6,26 @@ import {
   NavLink,
   Link,
 } from "react-router-dom";
+import AnimatedCursor from "react-animated-cursor";
+import Cursor from "./components/CustomCursor/Cursor";
 import Projects from "./components/Projects/Projects";
 import Contact from "./components/Contact/Contact";
 import Home from "./components/Home/Home";
-import { useState } from "react";
 import Logo from "./assets/logo.png";
 import "./App.css";
 
 function App() {
   const [showNavbar, setShowNavbar] = useState(false);
+  const [click, setClick] = useState(false);
   const [active, setActive] = useState("home");
+
+  useEffect(() => {
+    if (click) {
+      setTimeout(() => {
+        setClick(false);
+      }, 500);
+    }
+  }, [click]);
 
   const toggleNav = (page) => {
     if (page === "home-logo") {
@@ -26,7 +37,12 @@ function App() {
   };
 
   return (
-    <div id="app" className={showNavbar ? "nav-active app" : "app"}>
+    <div
+      onMouseDown={() => setClick(true)}
+      id="app"
+      className={showNavbar ? "nav-active app" : "app"}
+    >
+      <Cursor click={click} />
       <Router>
         <header className="cd-header">
           <div className="header-wrapper">

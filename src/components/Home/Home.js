@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import AnimatedText from "react-animated-text-content";
 import Loading from "../Loading/Loading";
 import "./Home.css";
 
@@ -45,9 +46,12 @@ const skills = [
   },
 ];
 
+const list = ["Frontend Web Developer", "Web3 and ML Enthusiast"];
+
 const Home = () => {
   const [section, setSection] = useState("about");
   const [loader, setLoader] = useState(true);
+  const [about, setAbout] = useState(2);
 
   window.addEventListener("scroll", () => {
     console.log("Scrolling... " + window.scrollY);
@@ -69,13 +73,69 @@ const Home = () => {
     };
   }, []);
 
+  let time;
+  useEffect(() => {
+    time = setInterval(() => {
+      setAbout((prev) => prev + 1);
+    }, 3000);
+
+    return () => {
+      clearInterval(time);
+    };
+  }, [about]);
+
   return (
     <div style={{ overflow: loader && "hidden" }} className="home-page">
       <Loading />
       <div className={`${section} bg-container`}>{section}</div>
       <div className="about-section">
         <p className="info-para">
-          I am a <span>Frontend Web Developer</span> who loves to work hands-on
+          I am a{" "}
+          <span>
+            {about % 2 === 0 ? (
+              <AnimatedText
+                type="words"
+                animation={{
+                  x: "200px",
+                  y: "-20px",
+                  scale: 1.1,
+                  ease: "ease-in-out",
+                }}
+                animationType="lights"
+                interval={0.01}
+                duration={0.6}
+                tag="p"
+                className="animated-paragraph"
+                includeWhiteSpaces
+                threshold={0.1}
+                rootMargin="20%"
+              >
+                {list[about % list.length]}
+              </AnimatedText>
+            ) : (
+              <AnimatedText
+                type="words"
+                animation={{
+                  x: "200px",
+                  y: "-10px",
+                  scale: 1.1,
+                  ease: "ease-in-out",
+                }}
+                animationType="lights"
+                interval={0.01}
+                duration={0.6}
+                tag="p"
+                className="animated-paragraph"
+                includeWhiteSpaces
+                threshold={0.1}
+                rootMargin="20%"
+              >
+                {list[about % list.length] + " "}
+              </AnimatedText>
+            )}
+          </span>
+          <br />
+          who loves to work hands-on
           <br /> — based in India.
         </p>
       </div>
