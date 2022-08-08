@@ -136,6 +136,54 @@ textarea {
   transition-duration: 300ms;
 }
 
+.sent {
+  display: inline-block;
+  animation: fadein;
+  animation-timing-function: ease-in;
+  animation-duration: 600ms;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+@keyframes fadein {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.4);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.unsent {
+  display: inline-block;
+  animation: comein;
+  animation-timing-function: ease-in;
+  animation-duration: 600ms;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+@keyframes comein {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 /*  Socials */
 
 .socials {

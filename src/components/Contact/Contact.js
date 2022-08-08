@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import Loading from "../Loading/Loading";
 import "./Contact.css";
@@ -9,10 +9,21 @@ const YOUR_PUBLIC_KEY = process.env.REACT_APP_PUBLIC_KEY;
 
 const Contact = () => {
   const form = useRef();
+  const [sent, setSent] = useState(false);
+
+  useEffect(() => {
+    const time = setTimeout(() => {
+      setSent(false);
+    }, 3000);
+
+    return () => {
+      clearTimeout(time);
+    };
+  }, [sent]);
 
   const sendEmail = (e) => {
     e.preventDefault();
-
+    setSent(true);
     emailjs
       .sendForm(
         `${YOUR_SERVICE_ID}`,
@@ -28,6 +39,7 @@ const Contact = () => {
           console.log(error.text);
         }
       );
+    form.current.reset();
   };
 
   return (
@@ -86,7 +98,15 @@ const Contact = () => {
               <span className="underline-animation"></span>
             </div>
             <div className="submit-btn">
-              <input value="Send" className="send-btn" type="submit" />
+              <button className="send-btn" type="submit">
+                {sent ? (
+                  <span className="sent">
+                    <i class="fa-solid fa-check"></i>
+                  </span>
+                ) : (
+                  <span className="unsent">Send</span>
+                )}
+              </button>
             </div>
           </form>
         </div>
