@@ -44,10 +44,6 @@ body {
   align-items: center;
 }
 
-.logo-wrap {
-  cursor: pointer;
-}
-
 .logo-wrap img {
   width: 50px;
 }
@@ -67,7 +63,6 @@ body {
   width: 30px;
   position: relative;
   z-index: 2;
-  cursor: pointer;
   display: block;
 }
 .menu-icon__line {
@@ -76,7 +71,6 @@ body {
   display: block;
   background-color: white;
   margin-bottom: 7px;
-  cursor: pointer;
   -webkit-transition: background-color 0.5s ease, -webkit-transform 0.2s ease;
   transition: background-color 0.5s ease, -webkit-transform 0.2s ease;
   transition: transform 0.2s ease, background-color 0.5s ease;
@@ -180,7 +174,6 @@ body {
   text-decoration: none;
   color: rgba(255, 255, 255, 0.6);
   overflow: hidden;
-  cursor: pointer;
   padding-left: 5px;
   padding-right: 5px;
   font-weight: 900;

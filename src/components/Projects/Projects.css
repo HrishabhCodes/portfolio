@@ -175,7 +175,6 @@
   background: #ffff;
   box-shadow: 0 10px 25px rgb(0, 0, 0, 0.1);
   transition: 0.5s;
-  cursor: pointer;
 }
 
 .proj-menu li:hover {
