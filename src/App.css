@@ -4,6 +4,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  cursor: none !important;
 }
 
 body::-webkit-scrollbar {
@@ -52,9 +53,6 @@ body {
   position: relative;
   display: block;
   float: right;
-  /* padding-left: 15px;
-  padding-top: 15px; */
-  /* margin-top: 26px; */
   transition: all 0.3s ease-out;
 }
 

@@ -50,12 +50,22 @@ const Contact = () => {
       <h1 className="contact-header">GET IN TOUCH</h1>
       <div className="contact-container">
         <div className="form-container">
-          <form ref={form} onSubmit={sendEmail} className="form">
+          <form
+            autoComplete="off"
+            ref={form}
+            onSubmit={sendEmail}
+            className="form"
+          >
+            <input
+              autocomplete="false"
+              name="hidden"
+              type="text"
+              style={{ display: "none" }}
+            />
             <div className="sender">
               <div className="name-container">
                 <input
                   name="user_name"
-                  autoComplete="none"
                   required
                   placeholder="Name"
                   className="text-inputs name"
@@ -66,7 +76,6 @@ const Contact = () => {
               <div className="mail-container">
                 <input
                   name="user_email"
-                  autoComplete="none"
                   required
                   placeholder="Email"
                   className="text-inputs mail"
@@ -78,7 +87,6 @@ const Contact = () => {
             <div className="subject-container">
               <input
                 name="subject"
-                autoComplete="none"
                 required
                 placeholder="Subject"
                 className="text-inputs subject"
@@ -88,7 +96,6 @@ const Contact = () => {
             </div>
             <div className="message-container">
               <textarea
-                autoComplete="none"
                 required
                 placeholder="Message"
                 className="message"

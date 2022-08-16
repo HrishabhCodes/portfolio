@@ -50,7 +50,7 @@ const skills = [
 const list = ["Frontend Web Developer", "Web3 and ML Enthusiast"];
 
 const Home = () => {
-  const [section, setSection] = useState("about");
+  const [section, setSection] = useState("hello");
   const [loader, setLoader] = useState(true);
   const [about, setAbout] = useState(2);
 
@@ -59,7 +59,7 @@ const Home = () => {
     if (window.scrollY >= 395) {
       setSection("skills");
     } else if (window.scrollY >= 0 && window.scrollY < 395) {
-      setSection("about");
+      setSection("hello");
     }
   });
 
@@ -90,7 +90,7 @@ const Home = () => {
       <Loading />
       <Particle />
       <div className={`${section} bg-container`}>{section}</div>
-      <div className="sections about-section">
+      <div className="sections hello-section">
         <p className="info-para">
           I am a{" "}
           <span>

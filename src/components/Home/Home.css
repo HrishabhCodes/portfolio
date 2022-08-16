@@ -18,10 +18,10 @@
   text-shadow: 5px 5px 10px rgba(54, 54, 54, 0.246);
 }
 
-.about {
+.hello {
   color: rgba(91, 91, 91, 0.2);
   background-color: black;
-  animation: aboutin;
+  animation: helloin;
   animation-timing-function: ease-out;
   animation-duration: 200ms;
   animation-fill-mode: forwards;
@@ -45,7 +45,7 @@
   }
 }
 
-@keyframes aboutin {
+@keyframes helloin {
   0% {
     transform: translateY(100vh);
   }
@@ -54,7 +54,7 @@
   }
 }
 
-.about-section {
+.hello-section {
   z-index: 1;
   font-family: "Montserrat", sans-serif;
   color: rgb(224, 224, 224);
@@ -70,7 +70,7 @@
   margin: 0 auto;
 }
 
-.about-section p.info-para span {
+.hello-section p.info-para span {
   color: rgb(255, 97, 150) !important;
   display: inline-block;
 }
