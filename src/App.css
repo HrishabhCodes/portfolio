@@ -1,3 +1,41 @@
+/* ─── Game cursor ───────────────────────────────────────────────────────── */
+@media (pointer: fine) {
+  html, body, a, button { cursor: none; }
+}
+
+.game-cursor {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10000;
+}
+
+/* ─── Toast ─────────────────────────────────────────────────────────────── */
+.toast {
+  position: fixed;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(12px);
+  background: rgba(18, 14, 8, 0.92);
+  border: 1px solid rgba(201, 164, 94, 0.35);
+  color: var(--gold, #c9a45e);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.toast--show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
 /* ─── Variables ─────────────────────────────────────────────────────────── */
 :root {
   --bg: #070707;
