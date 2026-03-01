@@ -15,6 +15,10 @@
   z-index: 10000;
 }
 
+@media (pointer: coarse) {
+  .game-cursor { display: none; }
+}
+
 /* ─── Toast ─────────────────────────────────────────────────────────────── */
 .toast {
   position: fixed;
@@ -297,12 +301,34 @@
   animation: fadeUp 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .photo {
-    height: 65vh;
-    opacity: 0.25;
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 50%);
-    mask-image: linear-gradient(to right, transparent 0%, black 50%);
+    position: absolute;
+    right: -20%;
+    bottom: 0;
+    height: 80vh;
+    width: auto;
+    opacity: 0.1;
+    filter: grayscale(100%) brightness(0.3) contrast(1.1) sepia(12%);
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.5) 30%,
+      black 60%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(0, 0, 0, 0.5) 30%,
+      black 60%
+    );
+  }
+}
+
+@media (max-width: 480px) {
+  .photo {
+    right: -50%;
+    filter: grayscale(100%) brightness(0.23) contrast(1.1) sepia(12%);
   }
 }
 
