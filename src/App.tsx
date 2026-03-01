@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import meImg from "./assets/me.png";
 import "./App.css";
 
 function GameCursor() {
@@ -175,6 +176,7 @@ function App() {
     <div className="page">
       <GameCursor />
       <div className="grain" aria-hidden="true" />
+      <img src={meImg} alt="" className="photo" aria-hidden="true" />
       <div className={`toast ${toast ? "toast--show" : ""}`} aria-live="polite">
         email copied to clipboard
       </div>
