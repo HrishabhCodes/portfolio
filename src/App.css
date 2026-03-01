@@ -1,3 +1,54 @@
+/* ─── Intro curtain ─────────────────────────────────────────────────────── */
+.curtain {
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: #040404;
+  z-index: 9998;
+  pointer-events: none;
+}
+
+.curtain--top {
+  top: 0;
+  animation: curtainTop 1s cubic-bezier(0.87, 0, 0.13, 1) 0.15s forwards;
+}
+
+.curtain--top::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, #c9a45e 50%, transparent 100%);
+}
+
+.curtain--bottom {
+  bottom: 0;
+  animation: curtainBottom 1s cubic-bezier(0.87, 0, 0.13, 1) 0.15s forwards;
+}
+
+.curtain--bottom::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, #c9a45e 50%, transparent 100%);
+}
+
+@keyframes curtainTop {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-100%); }
+}
+
+@keyframes curtainBottom {
+  from { transform: translateY(0); }
+  to   { transform: translateY(100%); }
+}
+
 /* ─── Game cursor ───────────────────────────────────────────────────────── */
 @media (pointer: fine) {
   html,

@@ -174,6 +174,8 @@ function App() {
 
   return (
     <div className="page">
+      <div className="curtain curtain--top" aria-hidden="true" />
+      <div className="curtain curtain--bottom" aria-hidden="true" />
       <GameCursor />
       <div className="grain" aria-hidden="true" />
       <img src={meImg} alt="" className="photo" aria-hidden="true" />
