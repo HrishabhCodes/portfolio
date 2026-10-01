@@ -21,10 +21,28 @@
       raf = Math.abs(x - rx) + Math.abs(y - ry) > 0.1 ? requestAnimationFrame(tick) : 0;
     };
 
+    // Embeds (X, LinkedIn) are cross-origin iframes: once the pointer enters one, this page
+    // gets no events at all, so the custom cursor would freeze on the edge. Hand over to the
+    // native cursor whenever the pointer is near an iframe or about to land inside one.
+    const HALO = 24;
+    const hide = () => root.classList.remove("cursor-on", "cursor-hover", "cursor-down");
+    const nearFrame = (px: number, py: number, dx: number, dy: number) => {
+      for (const f of document.getElementsByTagName("iframe")) {
+        const r = f.getBoundingClientRect();
+        if (!r.width || !r.height) continue;
+        for (const [qx, qy] of [[px, py], [px + dx * 2, py + dy * 2]]) {
+          if (qx > r.left - HALO && qx < r.right + HALO && qy > r.top - HALO && qy < r.bottom + HALO) return true;
+        }
+      }
+      return false;
+    };
+
     addEventListener("pointermove", (e) => {
       if (e.pointerType !== "mouse") return;
+      const dx = e.clientX - x, dy = e.clientY - y;
       x = e.clientX;
       y = e.clientY;
+      if (nearFrame(x, y, dx, dy)) return hide();
       dot.style.transform = `translate3d(${x}px, ${y}px, 0)`;
       if (!root.classList.contains("cursor-on")) {
         rx = x; ry = y;
@@ -38,10 +56,11 @@
     });
     addEventListener("pointerdown", () => root.classList.add("cursor-down"));
     addEventListener("pointerup", () => root.classList.remove("cursor-down"));
-    // Leaving the window or entering an iframe (embeds) hands control back to the native cursor.
     addEventListener("pointerout", (e) => {
-      if (!e.relatedTarget || (e.relatedTarget as Element).tagName === "IFRAME") root.classList.remove("cursor-on");
+      if (!e.relatedTarget || e.relatedTarget instanceof HTMLIFrameElement) hide();
     });
+    // Focus moving into an iframe (e.g. a click inside an embed) also means we lost the pointer.
+    addEventListener("blur", hide);
   }
 </script>
 

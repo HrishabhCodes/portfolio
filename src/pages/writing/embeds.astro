@@ -33,7 +33,7 @@ const fmt = new Intl.DateTimeFormat("en", { day: "numeric", month: "long", year:
     </header>
 
     {groupByYear(posts).map(([year, list]) => (
-    <YearGroup year={year}>
+    <YearGroup year={year} count={list.length}>
     <div class="masonry">
       {list.map((p) => {
         const li = p.platform === "linkedin" ? linkedInEmbedUrl(p) : undefined;

@@ -39,7 +39,7 @@ const pageUrl = new URL("/writing", Astro.site).href;
     </header>
 
     {groupByYear(posts).map(([year, list]) => (
-      <YearGroup year={year}>
+      <YearGroup year={year} count={list.length}>
         {list.map((post) => <WritingCard post={post} />)}
       </YearGroup>
     ))}

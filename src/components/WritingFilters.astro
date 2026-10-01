@@ -37,7 +37,12 @@ const filters = [
       const key = btn.dataset.filter!;
       buttons.forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
       items.forEach((el) => (el.hidden = key !== "all" && el.dataset.platform !== key));
-      years.forEach((y) => (y.hidden = !y.querySelector("[data-platform]:not([hidden])")));
+      years.forEach((y) => {
+        const n = y.querySelectorAll("[data-platform]:not([hidden])").length;
+        y.hidden = n === 0;
+        const label = y.querySelector("[data-year-count]");
+        if (label) label.textContent = `${n} ${n === 1 ? "piece" : "pieces"}`;
+      });
     });
   }
 </script>

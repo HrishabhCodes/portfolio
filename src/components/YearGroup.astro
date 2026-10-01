@@ -1,37 +1,31 @@
 ---
 interface Props {
   year: string;
+  count: number;
 }
 
-const { year } = Astro.props;
+const { year, count } = Astro.props;
 ---
 
 <section class="year" data-year={year} aria-labelledby={`y-${year}`}>
-  <h2 id={`y-${year}`} class="year-label">{year}</h2>
+  <header class="head">
+    <h2 id={`y-${year}`} class="numeral">{year}</h2>
+    <span class="label count" data-year-count>{count} {count === 1 ? "piece" : "pieces"}</span>
+  </header>
   <div class="content"><slot /></div>
 </section>
 
 <style>
-  .year {
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    gap: 0 24px;
-    margin-top: clamp(48px, 7vw, 80px);
+  .year { margin-top: clamp(56px, 8vw, 96px); }
+  .head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 8px; }
+  .numeral {
+    font-size: clamp(56px, 8vw, 112px);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+    color: transparent;
+    -webkit-text-stroke: 1px #4a4a4a;
   }
-  .year-label {
-    font-family: var(--mono);
-    font-size: 13px;
-    font-weight: 400;
-    color: var(--accent);
-    padding-top: 30px;
-    position: sticky;
-    top: calc(var(--nav-h) + 16px);
-    align-self: start;
-  }
-  .content { min-width: 0; border-top: 1px solid var(--fg); }
-
-  @media (max-width: 760px) {
-    .year { grid-template-columns: 1fr; }
-    .year-label { position: static; padding: 0 0 10px; }
-  }
+  .count { color: var(--accent); }
+  .content { min-width: 0; }
 </style>
