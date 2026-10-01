@@ -1,0 +1,37 @@
+---
+interface Props {
+  year: string;
+}
+
+const { year } = Astro.props;
+---
+
+<section class="year" data-year={year} aria-labelledby={`y-${year}`}>
+  <h2 id={`y-${year}`} class="year-label">{year}</h2>
+  <div class="content"><slot /></div>
+</section>
+
+<style>
+  .year {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 0 24px;
+    margin-top: clamp(48px, 7vw, 80px);
+  }
+  .year-label {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--accent);
+    padding-top: 30px;
+    position: sticky;
+    top: calc(var(--nav-h) + 16px);
+    align-self: start;
+  }
+  .content { min-width: 0; border-top: 1px solid var(--fg); }
+
+  @media (max-width: 760px) {
+    .year { grid-template-columns: 1fr; }
+    .year-label { position: static; padding: 0 0 10px; }
+  }
+</style>

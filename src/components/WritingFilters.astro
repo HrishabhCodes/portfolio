@@ -1,0 +1,62 @@
+---
+import type { Post } from "../lib/writing";
+import { PLATFORM_LABEL } from "../lib/writing-data";
+
+interface Props {
+  posts: Post[];
+}
+
+const { posts } = Astro.props;
+const order: Post["platform"][] = ["medium", "linkedin", "x"];
+const filters = [
+  { key: "all", label: "All", count: posts.length },
+  ...order
+    .map((k) => ({ key: k, label: k === "medium" ? "Articles" : PLATFORM_LABEL[k], count: posts.filter((p) => p.platform === k).length }))
+    .filter((f) => f.count > 0),
+];
+---
+
+{filters.length > 2 && (
+  <div class="filters" role="group" aria-label="Filter by platform">
+    {filters.map((f, i) => (
+      <button type="button" data-filter={f.key} aria-pressed={i === 0 ? "true" : "false"}>
+        {f.label} <span class="count">{f.count}</span>
+      </button>
+    ))}
+  </div>
+)}
+
+<script>
+  // Works on any page with [data-platform] items grouped in [data-year] sections.
+  const buttons = document.querySelectorAll<HTMLButtonElement>("[data-filter]");
+  const items = document.querySelectorAll<HTMLElement>("[data-year] [data-platform]");
+  const years = document.querySelectorAll<HTMLElement>("[data-year]");
+
+  for (const btn of buttons) {
+    btn.addEventListener("click", () => {
+      const key = btn.dataset.filter!;
+      buttons.forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+      items.forEach((el) => (el.hidden = key !== "all" && el.dataset.platform !== key));
+      years.forEach((y) => (y.hidden = !y.querySelector("[data-platform]:not([hidden])")));
+    });
+  }
+</script>
+
+<style>
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+  button {
+    font-weight: 600;
+    font-size: 14px;
+    padding: 7px 14px;
+    border: 1px solid var(--line);
+    color: var(--fg-2);
+    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  }
+  button:hover { border-color: var(--fg-2); color: var(--fg); }
+  button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .count { font-family: var(--mono); font-size: 11px; font-weight: 400; opacity: 0.7; margin-left: 4px; }
+</style>
+
+<style is:global>
+  [data-year][hidden], [data-year] [data-platform][hidden] { display: none !important; }
+</style>

@@ -3,6 +3,9 @@ import Base from "../../layouts/Base.astro";
 import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
 import ViewSwitch from "../../components/ViewSwitch.astro";
+import WritingFilters from "../../components/WritingFilters.astro";
+import YearGroup from "../../components/YearGroup.astro";
+import { groupByYear } from "../../lib/writing-group";
 import { getPosts } from "../../lib/writing-data";
 import { linkedInEmbedUrl } from "../../lib/writing";
 
@@ -26,13 +29,16 @@ const fmt = new Intl.DateTimeFormat("en", { day: "numeric", month: "long", year:
       <h1>Writing<span class="dot">.</span></h1>
       <p class="lede">The same posts, straight from the source. Long reads on Medium, quick takes on LinkedIn and X.</p>
       <ViewSwitch current="embeds" />
+      <WritingFilters posts={posts} />
     </header>
 
+    {groupByYear(posts).map(([year, list]) => (
+    <YearGroup year={year}>
     <div class="masonry">
-      {posts.map((p) => {
+      {list.map((p) => {
         const li = p.platform === "linkedin" ? linkedInEmbedUrl(p) : undefined;
         return (
-          <div class:list={["item", p.platform]} data-reveal>
+          <div class:list={["item", p.platform]} data-platform={p.platform} data-reveal>
             {p.platform === "x" && (
               <blockquote class="twitter-tweet" data-theme="dark" data-dnt="true" data-conversation="none">
                 <p lang="en" dir="ltr">{p.text}</p>
@@ -45,7 +51,7 @@ const fmt = new Intl.DateTimeFormat("en", { day: "numeric", month: "long", year:
                 src={li}
                 title={`LinkedIn post by Hrishabh Jain${p.title ? `: ${p.title}` : ""}`}
                 loading="lazy"
-                height="400"
+                height="420"
                 allowfullscreen
               />
             )}
@@ -71,6 +77,8 @@ const fmt = new Intl.DateTimeFormat("en", { day: "numeric", month: "long", year:
         );
       })}
     </div>
+    </YearGroup>
+    ))}
   </main>
   <Footer num="" />
 </Base>
@@ -86,9 +94,12 @@ const fmt = new Intl.DateTimeFormat("en", { day: "numeric", month: "long", year:
   .dot { color: var(--accent); }
   .lede { margin-top: 24px; max-width: 34em; font-size: clamp(16px, 1.6vw, 20px); line-height: 1.45; color: var(--fg-2); }
 
-  .masonry { columns: 3 320px; column-gap: 24px; margin-top: clamp(40px, 6vw, 64px); }
+  .masonry { columns: 3 300px; column-gap: 24px; padding-top: 24px; }
   .item { break-inside: avoid; margin-bottom: 24px; }
   .item :global(.twitter-tweet) { margin: 0 !important; }
+  /* X renders a light-scheme iframe; on our dark page the browser paints it an
+     opaque white backdrop that shows in the rounded corners. Match + clip. */
+  .item :global(iframe[id^="twitter-widget"]) { color-scheme: light; border-radius: 12px; }
   /* Pre-render fallback for the X embed (replaced once widgets.js loads). */
   blockquote.twitter-tweet {
     border: 1px solid #2f3336;
