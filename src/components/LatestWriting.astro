@@ -1,0 +1,33 @@
+---
+import Section from "./Section.astro";
+import WritingCard from "./WritingCard.astro";
+import { getPosts } from "../lib/writing-data";
+
+const latest = (await getPosts()).slice(0, 3);
+---
+
+{latest.length > 0 && (
+  <Section id="writing" num="05" title="Writing" label="latest notes">
+    <div class="grid">
+      {latest.map((post) => <WritingCard post={post} variant="card" />)}
+    </div>
+    <a class="all" href="/writing" data-reveal>All writing <span aria-hidden="true">→</span></a>
+  </Section>
+)}
+
+<style>
+  .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 32px; }
+  .all {
+    display: inline-block;
+    margin-top: 28px;
+    font-weight: 600;
+    background: var(--accent);
+    color: var(--accent-ink);
+    padding: 8px 16px;
+    transition: background 0.2s ease;
+  }
+  .all:hover { background: var(--fg); }
+  @media (max-width: 860px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>

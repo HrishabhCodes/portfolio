@@ -13,14 +13,18 @@ import { buildJsonLd } from "../lib/schema";
 interface Props {
   title: string;
   description?: string;
+  ogType?: "profile" | "website";
+  /** Extra schema.org nodes appended to the page's @graph. */
+  graph?: object[];
 }
 
-const { title, description = metaDescription } = Astro.props;
+const { title, description = metaDescription, ogType = "profile", graph = [] } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL("/og.png", Astro.site).href;
 const portrait = await getImage({ src: portraitImg, width: 800, format: "jpeg" });
 const portraitUrl = new URL(portrait.src, Astro.site).href;
-const jsonLd = buildJsonLd(portraitUrl);
+const baseLd = buildJsonLd(portraitUrl);
+const jsonLd = { ...baseLd, "@graph": [...baseLd["@graph"], ...graph] };
 ---
 
 <!doctype html>
@@ -38,7 +42,7 @@ const jsonLd = buildJsonLd(portraitUrl);
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="alternate" type="text/plain" title="LLM summary" href="/llms.txt" />
 
-    <meta property="og:type" content="profile" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={profile.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -70,3 +74,23 @@ const jsonLd = buildJsonLd(portraitUrl);
     <SpeedInsights />
   </body>
 </html>
+
+<script>
+  const els = document.querySelectorAll("[data-reveal]");
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            e.target.classList.add("is-in");
+            io.unobserve(e.target);
+          }
+        }
+      },
+      { rootMargin: "0px 0px -8% 0px" },
+    );
+    els.forEach((el) => io.observe(el));
+  } else {
+    els.forEach((el) => el.classList.add("is-in"));
+  }
+</script>

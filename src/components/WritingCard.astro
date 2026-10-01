@@ -1,0 +1,121 @@
+---
+import type { Post } from "../lib/writing";
+import { PLATFORM_LABEL } from "../lib/writing-data";
+
+interface Props {
+  post: Post;
+  /** "row" for the /writing feed, "card" for the home-page teaser. */
+  variant?: "row" | "card";
+}
+
+const { post: p, variant = "row" } = Astro.props;
+const label = PLATFORM_LABEL[p.platform];
+const date = new Intl.DateTimeFormat("en", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" }).format(new Date(p.date));
+const kind = p.platform === "medium" ? "Article" : "Post";
+// Cards read as one paragraph; feed rows keep line breaks but drop blank lines.
+const text = variant === "card" ? p.text.replace(/\s*\n+\s*/g, " ") : p.text.replace(/\n{2,}/g, "\n");
+const meta = [
+  p.readingMinutes && `${p.readingMinutes} min read`,
+  p.likes != null && `${p.likes} likes`,
+  p.comments != null && `${p.comments} comments`,
+].filter(Boolean);
+---
+
+<article class:list={["post", variant, p.platform, { "has-image": variant === "row" && p.image }]} data-platform={p.platform} data-reveal>
+  <a class="hit" href={p.url} target="_blank" rel="noopener" aria-label={`${p.title ?? `${label} post`} (opens on ${label})`}></a>
+
+  <header class="top">
+    <span class="badge">{label}</span>
+    <span class="label kind">{kind}</span>
+    <time class="label" datetime={p.date}>{date}</time>
+  </header>
+
+  <div class="body">
+    {p.title && <h3>{p.title}</h3>}
+    <p class="text">{text}</p>
+    {variant === "row" && (meta.length > 0 || p.tags?.length) && (
+      <p class="meta label">
+        {meta.map((m) => <span>{m}</span>)}
+        {p.tags?.map((t) => <span class="t">#{t}</span>)}
+      </p>
+    )}
+    <span class="go">Read on {label} <span aria-hidden="true">↗</span></span>
+  </div>
+
+  {variant === "row" && p.image && (
+    <div class="thumb">
+      <img src={p.image} alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
+    </div>
+  )}
+</article>
+
+<style>
+  .post { position: relative; }
+  .hit { position: absolute; inset: 0; z-index: 1; }
+  .hit:focus-visible { outline-offset: -2px; }
+
+  .top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent-ink);
+    background: var(--accent);
+    padding: 2px 8px;
+  }
+  .kind { color: var(--fg-2); }
+
+  h3 { font-size: clamp(19px, 1.8vw, 24px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; }
+  .text {
+    color: var(--fg-2);
+    white-space: pre-line;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .x .text { color: var(--fg); font-size: 18px; line-height: 1.45; letter-spacing: -0.01em; }
+  .meta { display: flex; flex-wrap: wrap; gap: 6px 14px; }
+  .meta .t { color: var(--fg-2); text-transform: none; letter-spacing: 0.02em; }
+  .go { font-weight: 600; font-size: 14px; color: var(--accent); }
+  .go span { display: inline-block; transition: transform 0.2s ease; }
+  .post:hover .go span { transform: translate(2px, -2px); }
+  .post:hover h3 { color: var(--accent); }
+
+  /* Feed row */
+  .row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 12px 32px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .row.has-image { grid-template-columns: 180px 1fr 220px; }
+  .row .top { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .row .body { display: flex; flex-direction: column; gap: 12px; min-width: 0; max-width: 46em; }
+  .row .text { -webkit-line-clamp: 6; }
+  .row.x .text { -webkit-line-clamp: 8; }
+  .thumb { align-self: start; border: 1px solid var(--line); overflow: hidden; background: var(--bg-2); }
+  .thumb img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; transition: transform 0.5s ease; }
+  .post:hover .thumb img { transform: scale(1.03); }
+
+  /* Home teaser card */
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 20px 0 8px;
+    border-top: 1px solid var(--line);
+  }
+  .card .body { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  .card .text { -webkit-line-clamp: 4; font-size: 15px; }
+  .card.x .text { font-size: 16px; -webkit-line-clamp: 6; }
+  .card h3 + .text { -webkit-line-clamp: 3; }
+  .card .go { margin-top: auto; padding-top: 4px; }
+
+  @media (max-width: 760px) {
+    .row, .row.has-image { grid-template-columns: 1fr; }
+    .row .top { flex-direction: row; align-items: center; }
+    .row.has-image .thumb { order: -1; }
+  }
+</style>

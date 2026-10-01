@@ -1,0 +1,143 @@
+---
+import Base from "../layouts/Base.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import WritingCard from "../components/WritingCard.astro";
+import { getPosts, PLATFORM_LABEL } from "../lib/writing-data";
+import { buildWritingJsonLd } from "../lib/schema";
+import type { Post } from "../lib/writing";
+
+const posts = await getPosts();
+const pageUrl = new URL("/writing", Astro.site).href;
+
+const byYear = new Map<string, Post[]>();
+for (const p of posts) {
+  const y = p.date.slice(0, 4);
+  byYear.set(y, [...(byYear.get(y) ?? []), p]);
+}
+
+const order: Post["platform"][] = ["medium", "linkedin", "x"];
+const filters = [
+  { key: "all", label: "All", count: posts.length },
+  ...order
+    .map((k) => ({ key: k, label: k === "medium" ? "Articles" : PLATFORM_LABEL[k], count: posts.filter((p) => p.platform === k).length }))
+    .filter((f) => f.count > 0),
+];
+---
+
+<Base
+  title="Writing · Hrishabh Jain | Notes on AI Agents, RAG & GEO"
+  description="Articles and posts by Hrishabh Jain on AI agents, RAG, generative engine optimization (GEO) and shipping AI to production, from Medium, LinkedIn and X."
+  ogType="website"
+  graph={buildWritingJsonLd(posts, pageUrl)}
+>
+  <Nav />
+  <main class="wrap page">
+    <header class="intro">
+      <p class="eyebrow">
+        <span class="dash" aria-hidden="true"></span>
+        <span class="label">{posts.length} pieces</span>
+      </p>
+      <h1>Writing<span class="dot">.</span></h1>
+      <p class="lede">
+        Notes on AI agents, RAG, GEO and building things that hold up in production. Long reads on Medium,
+        quick takes on LinkedIn and X.
+      </p>
+
+      {filters.length > 2 && (
+        <div class="filters" role="group" aria-label="Filter by platform">
+          {filters.map((f, i) => (
+            <button type="button" data-filter={f.key} aria-pressed={i === 0 ? "true" : "false"}>
+              {f.label} <span class="count">{f.count}</span>
+            </button>
+          ))}
+        </div>
+      )}
+    </header>
+
+    {[...byYear].map(([year, list]) => (
+      <section class="year" data-year={year} aria-labelledby={`y-${year}`}>
+        <h2 id={`y-${year}`} class="year-label">{year}</h2>
+        <div class="list">
+          {list.map((post) => <WritingCard post={post} />)}
+        </div>
+      </section>
+    ))}
+
+    <p class="empty label" hidden>Nothing here yet.</p>
+  </main>
+  <Footer num="" />
+</Base>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>("[data-filter]");
+  const posts = document.querySelectorAll<HTMLElement>(".post[data-platform]");
+  const years = document.querySelectorAll<HTMLElement>(".year");
+  const empty = document.querySelector<HTMLElement>(".empty");
+
+  for (const btn of buttons) {
+    btn.addEventListener("click", () => {
+      const key = btn.dataset.filter!;
+      buttons.forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+      posts.forEach((p) => (p.hidden = key !== "all" && p.dataset.platform !== key));
+      years.forEach((y) => (y.hidden = !y.querySelector(".post:not([hidden])")));
+      if (empty) empty.hidden = [...posts].some((p) => !p.hidden);
+    });
+  }
+</script>
+
+<style>
+  .page { padding-top: clamp(48px, 8vw, 96px); }
+  .eyebrow { display: flex; align-items: center; gap: 12px; }
+  .num { font-family: var(--mono); font-size: 13px; color: var(--accent); }
+  .dash { width: 32px; height: 2px; background: var(--accent); }
+  .eyebrow .label { color: var(--fg-2); }
+  h1 {
+    margin-top: 16px;
+    font-size: clamp(56px, 10vw, 136px);
+    font-weight: 900;
+    line-height: 0.86;
+    letter-spacing: -0.055em;
+  }
+  .dot { color: var(--accent); }
+  .lede { margin-top: 24px; max-width: 34em; font-size: clamp(16px, 1.6vw, 20px); line-height: 1.45; color: var(--fg-2); }
+
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 36px; }
+  .filters button {
+    font-weight: 600;
+    font-size: 14px;
+    padding: 7px 14px;
+    border: 1px solid var(--line);
+    color: var(--fg-2);
+    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  }
+  .filters button:hover { border-color: var(--fg-2); color: var(--fg); }
+  .filters button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .count { font-family: var(--mono); font-size: 11px; font-weight: 400; opacity: 0.7; margin-left: 4px; }
+
+  .year {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 0 24px;
+    margin-top: clamp(48px, 7vw, 80px);
+  }
+  .year[hidden] { display: none; }
+  .year-label {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--accent);
+    padding-top: 30px;
+    position: sticky;
+    top: calc(var(--nav-h) + 16px);
+    align-self: start;
+  }
+  .list { border-top: 1px solid var(--fg); }
+  .list :global(.post[hidden]) { display: none; }
+  .empty { margin-top: 48px; }
+
+  @media (max-width: 760px) {
+    .year { grid-template-columns: 1fr; }
+    .year-label { position: static; padding: 0 0 10px; }
+  }
+</style>

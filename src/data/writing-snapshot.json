@@ -1,0 +1,51 @@
+{
+  "fetchedAt": "2026-10-01T08:30:17.790Z",
+  "posts": [
+    {
+      "platform": "linkedin",
+      "url": "https://www.linkedin.com/posts/hrishabh-jain_geo-aisearch-jev-activity-7509229400853254144-JFAy",
+      "date": "2026-09-25T12:36:43.898Z",
+      "title": "Why AI Didn't Cite Your Site in Search Results",
+      "text": "I asked an AI for the best whey protein in India.\n\nThe legacy brands showed up. The viral protein sponsor of India's Got Latent, despite millions of views, did not.\n\nThe top pick was the brand that wrote the answer page. Its own site had a 2,000+ word breakdown titled around the exact query, with comparison tables and an FAQ, and that page became the AI's #1 source.\n\nWhy this matters: Pew found that when Google shows an AI summary, people click a regular search result 8% of the time, versus 15% without one. If the AI answer doesn't name you, most people never reach you. That's what GEO is…",
+      "image": "https://media.licdn.com/dms/image/v2/D5605AQEYv1Swgdk2Hw/videocover-high/B56aDYkTynHYBM-/0/1790339793747?e=2147483647&v=beta&t=H9hnAbKt0NAcvC5I2NZiP1HKubsofT8slWlLohLeF9o",
+      "likes": 18,
+      "comments": 12,
+      "source": "https://www.linkedin.com/feed/update/urn:li:activity:7509229400853254144/"
+    },
+    {
+      "platform": "x",
+      "url": "https://x.com/hrishabh_hj/status/2103469380017492453",
+      "date": "2026-09-25T12:00:00.000Z",
+      "text": "asked AI for the best whey protein in india 🏋️\n\nthe protein brand from a very famous roast show? not cited. not even mentioned. millions of views, zero AI love.\n\nthe winner was the brand that wrote a page called \"Best Whey Protein in India\". comparison tables, FAQ, 2k+ words. the…",
+      "source": "https://x.com/hrishabh_hj/status/2103469380017492453"
+    },
+    {
+      "platform": "medium",
+      "url": "https://medium.com/@HrishabhCodes/bringing-characters-to-life-the-power-of-generative-agents-in-ai-6a471737acd0",
+      "date": "2023-04-18T03:57:37.000Z",
+      "title": "Bringing Characters to Life: The Power of Generative Agents",
+      "text": "Imagine a virtual world where you can interact with realistic characters that have their own personalities, preferences, and memories. They can talk to you, learn from you, and even invite you to their parties. Sounds like a sci-fi movie, right? Well, not anymore. A team of researchers from Stanford University and…",
+      "image": "https://cdn-images-1.medium.com/max/1024/1*yWK9naqFjcix4tWsLmruzQ.png",
+      "tags": [
+        "innovation",
+        "simulation",
+        "generative-agents"
+      ],
+      "readingMinutes": 3
+    },
+    {
+      "platform": "medium",
+      "url": "https://medium.com/@HrishabhCodes/how-to-add-conversational-ui-in-react-apps-using-alan-ai-959b839cda42",
+      "date": "2022-11-11T05:16:04.000Z",
+      "title": "How to add Conversational UI in React Apps using Alan AI",
+      "text": "“Hi Google, how’s the weather today?”, “Hey, Siri, remind me to call Smit at 9 pm.”, “Alexa, where is the closest restaurant?” You must have heard many people saying such sentences and asking questions, even you might have done the same. Clearly, voice tech has seen a huge rise in the past decade. However, the voice…",
+      "image": "https://cdn-images-1.medium.com/max/1024/1*hWxrQgzYRKUFOduY0aWjAg.png",
+      "tags": [
+        "conversational-ui",
+        "voice-assistant",
+        "react"
+      ],
+      "readingMinutes": 6
+    }
+  ]
+}

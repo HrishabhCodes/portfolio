@@ -17,9 +17,21 @@ bun run build      # astro check + static build to dist/
 - `src/lib/github.ts`: build-time GitHub fetch. Uses `GITHUB_TOKEN` (GraphQL) if set, otherwise public REST; falls back to `src/data/github-snapshot.json`.
 - `src/pages/robots.txt.ts`, `src/pages/llms.txt.ts`: generated SEO/AEO files. The sitemap comes from `@astrojs/sitemap`.
 
+## Writing page
+
+`/writing` lists Medium articles (pulled automatically from the RSS feed for `mediumHandle`) plus any X or LinkedIn posts listed in `src/data/writing.ts`. To add a post, paste its URL:
+
+```ts
+{ url: "https://x.com/hrishabh_hj/status/…" },
+{ url: "https://www.linkedin.com/feed/update/urn:li:activity:…/" },
+```
+
+The text, date, image and reactions are fetched at build time. Add `title`, `text`, `date` or `image` to override any of them. The home page shows the 3 latest pieces.
+
 ## Scripts
 
 - `bun run github:snapshot`: refresh the committed GitHub fallback snapshot.
+- `bun run writing:snapshot`: refresh the committed writing fallback snapshot (run after adding posts).
 - `bun run og`: re-render `public/og.png` from `scripts/og.html` (needs Google Chrome).
 
 ## Deploy setup (one-time)

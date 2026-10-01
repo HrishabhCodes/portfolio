@@ -4,9 +4,11 @@ import { experience, formatMonth } from "../data/experience";
 import { projects } from "../data/projects";
 import { stack } from "../data/stack";
 import { education, certifications } from "../data/education";
+import { getPosts, PLATFORM_LABEL } from "../lib/writing-data";
 
 /** llms.txt (https://llmstxt.org): a plain-markdown summary for AI answer engines. */
-export const GET: APIRoute = () => {
+export const GET: APIRoute = async () => {
+  const posts = await getPosts();
   const lines = [
     `# ${profile.name}`,
     "",
@@ -31,6 +33,10 @@ export const GET: APIRoute = () => {
     ]),
     "## Projects",
     ...projects.map((p) => `- ${p.name} (${p.year}): ${p.description} Built with ${p.stack.join(", ")}.`),
+    "",
+    "## Writing",
+    `All writing: ${profile.url}/writing`,
+    ...posts.map((p) => `- [${p.title ?? p.text.split("\n")[0].slice(0, 90)}](${p.url}) (${PLATFORM_LABEL[p.platform]}, ${p.date.slice(0, 10)})`),
     "",
     "## Skills",
     ...stack.map((s) => `- ${s.group}: ${s.items.join(", ")}`),

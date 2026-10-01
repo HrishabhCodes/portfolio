@@ -2,6 +2,7 @@ import { profile, metaDescription, socials, faq } from "../data/profile";
 import { experience } from "../data/experience";
 import { education, certifications } from "../data/education";
 import { allSkills } from "../data/stack";
+import type { Post } from "./writing";
 
 const SITE = profile.url;
 const PERSON_ID = `${SITE}/#person`;
@@ -95,4 +96,35 @@ export function buildJsonLd(imageUrl: string, now = new Date()) {
       },
     ],
   };
+}
+
+/** schema.org nodes for the /writing feed: a CollectionPage listing every post. */
+export function buildWritingJsonLd(posts: Post[], pageUrl: string) {
+  return [
+    {
+      "@type": "CollectionPage",
+      "@id": `${pageUrl}#page`,
+      url: pageUrl,
+      name: `Writing · ${profile.name}`,
+      isPartOf: { "@id": `${SITE}/#website` },
+      author: { "@id": PERSON_ID },
+      mainEntity: {
+        "@type": "ItemList",
+        itemListElement: posts.map((p, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          item: {
+            "@type": p.platform === "medium" ? "BlogPosting" : "SocialMediaPosting",
+            url: p.url,
+            ...(p.title && { headline: p.title }),
+            ...(p.platform !== "medium" && { articleBody: p.text }),
+            ...(p.platform === "medium" && { abstract: p.text }),
+            datePublished: p.date,
+            author: { "@id": PERSON_ID },
+            ...(p.image && { image: p.image }),
+          },
+        })),
+      },
+    },
+  ];
 }

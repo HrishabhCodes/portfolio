@@ -1,13 +1,18 @@
 ---
 import { profile, socials } from "../data/profile";
 
+interface Props {
+  num?: string;
+}
+
+const { num = "09" } = Astro.props;
 const year = new Date().getFullYear();
 const updated = new Intl.DateTimeFormat("en", { day: "numeric", month: "short", year: "numeric" }).format(new Date());
 ---
 
 <footer id="contact" class="footer wrap" aria-labelledby="contact-title">
   <p class="eyebrow">
-    <span class="num">08</span>
+    {num && <span class="num">{num}</span>}
     <span class="dash" aria-hidden="true"></span>
     <span class="label side">Contact</span>
   </p>

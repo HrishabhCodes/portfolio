@@ -1,21 +1,27 @@
 ---
 import { profile } from "../data/profile";
 
+// Absolute "/#…" links so the nav also works from /writing.
 const links = [
-  { href: "#experience", label: "Work" },
-  { href: "#github", label: "GitHub" },
-  { href: "#projects", label: "Projects" },
-  { href: "#stack", label: "Stack" },
-  { href: "#education", label: "Education" },
-  { href: "#faq", label: "FAQ" },
+  { href: "/#experience", label: "Work" },
+  { href: "/#github", label: "GitHub" },
+  { href: "/#projects", label: "Projects" },
+  { href: "/writing", label: "Writing" },
+  { href: "/#stack", label: "Stack" },
+  { href: "/#faq", label: "FAQ" },
 ];
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
 ---
 
 <header class="nav">
   <nav class="wrap inner" aria-label="Primary">
-    <a href="#top" class="brand">{profile.name} <span class="dot" aria-hidden="true">●</span></a>
+    <a href="/" class="brand">{profile.name} <span class="dot" aria-hidden="true">●</span></a>
     <ul class="links">
-      {links.map((l) => <li><a class="link-u" href={l.href}>{l.label}</a></li>)}
+      {links.map((l) => (
+        <li>
+          <a class="link-u" href={l.href} aria-current={l.href === path ? "page" : undefined}>{l.label}</a>
+        </li>
+      ))}
     </ul>
     <a href="#contact" class="cta">Contact</a>
   </nav>
@@ -42,7 +48,8 @@ const links = [
   .brand { white-space: nowrap; }
   .dot { color: var(--accent); font-size: 10px; vertical-align: 2px; }
   .links { display: flex; gap: 22px; margin-left: auto; color: var(--fg-2); }
-  .links a:hover { color: var(--fg); }
+  .links a:hover, .links a[aria-current="page"] { color: var(--fg); }
+  .links a[aria-current="page"] { background-size: 100% 2px; }
   .cta {
     background: var(--accent);
     color: var(--accent-ink);
