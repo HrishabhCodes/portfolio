@@ -28,11 +28,12 @@ bun run build      # astro check + static build to dist/
 
 The text, date, image and reactions are fetched at build time. Add `title`, `text`, `date` or `image` to override any of them. The home page shows the 3 latest pieces.
 
+`public/og.png` is the 1200×630 social share image.
+
 ## Scripts
 
 - `bun run github:snapshot`: refresh the committed GitHub fallback snapshot.
 - `bun run writing:snapshot`: refresh the committed writing fallback snapshot (run after adding posts).
-- `bun run og`: re-render `public/og.png` from `scripts/og.html` (needs Google Chrome).
 
 ## Deploy setup (one-time)
 
