@@ -38,7 +38,10 @@
     });
     addEventListener("pointerdown", () => root.classList.add("cursor-down"));
     addEventListener("pointerup", () => root.classList.remove("cursor-down"));
-    document.addEventListener("pointerleave", () => root.classList.remove("cursor-on"));
+    // Leaving the window or entering an iframe (embeds) hands control back to the native cursor.
+    addEventListener("pointerout", (e) => {
+      if (!e.relatedTarget || (e.relatedTarget as Element).tagName === "IFRAME") root.classList.remove("cursor-on");
+    });
   }
 </script>
 

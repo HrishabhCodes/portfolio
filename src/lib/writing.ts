@@ -152,3 +152,9 @@ export function mergePosts(manual: Post[], feed: Post[]): Post[] {
   const seen = new Set(manual.map((p) => p.url));
   return [...manual, ...feed.filter((p) => !seen.has(p.url))].sort((a, b) => b.date.localeCompare(a.date));
 }
+
+/** LinkedIn's official embed URL, derived from the activity id in any post URL. */
+export function linkedInEmbedUrl(post: Pick<Post, "url" | "source">): string | undefined {
+  const id = `${post.source ?? ""} ${post.url}`.match(/activity[:-](\d{10,})/)?.[1];
+  return id && `https://www.linkedin.com/embed/feed/update/urn:li:activity:${id}?collapsed=1`;
+}

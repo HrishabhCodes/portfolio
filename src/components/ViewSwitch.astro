@@ -1,0 +1,24 @@
+---
+interface Props {
+  current: "cards" | "embeds";
+}
+
+const { current } = Astro.props;
+const views = [
+  { key: "cards", label: "Cards", href: "/writing" },
+  { key: "embeds", label: "Embeds", href: "/writing/embeds" },
+];
+---
+
+<nav class="switch" aria-label="Writing view">
+  {views.map((v) => (
+    <a href={v.href} aria-current={v.key === current ? "page" : undefined}>{v.label}</a>
+  ))}
+</nav>
+
+<style>
+  .switch { display: inline-flex; margin-top: 28px; border: 1px solid var(--line); }
+  a { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; padding: 6px 12px; color: var(--muted); }
+  a:hover { color: var(--fg); }
+  a[aria-current="page"] { background: var(--fg); color: var(--accent-ink); }
+</style>

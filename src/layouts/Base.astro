@@ -16,9 +16,10 @@ interface Props {
   ogType?: "profile" | "website";
   /** Extra schema.org nodes appended to the page's @graph. */
   graph?: object[];
+  noindex?: boolean;
 }
 
-const { title, description = metaDescription, ogType = "profile", graph = [] } = Astro.props;
+const { title, description = metaDescription, ogType = "profile", graph = [], noindex = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL("/og.png", Astro.site).href;
 const portrait = await getImage({ src: portraitImg, width: 800, format: "jpeg" });
@@ -36,7 +37,7 @@ const jsonLd = { ...baseLd, "@graph": [...baseLd["@graph"], ...graph] };
     <meta name="description" content={description} />
     <meta name="author" content={profile.name} />
     <link rel="canonical" href={canonical} />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <meta name="robots" content={noindex ? "noindex, follow" : "index, follow, max-image-preview:large, max-snippet:-1"} />
     <meta name="theme-color" content="#0b0b0b" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="sitemap" href="/sitemap-index.xml" />

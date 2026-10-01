@@ -1,0 +1,134 @@
+---
+import Base from "../../layouts/Base.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+import ViewSwitch from "../../components/ViewSwitch.astro";
+import { getPosts } from "../../lib/writing-data";
+import { linkedInEmbedUrl } from "../../lib/writing";
+
+const posts = await getPosts();
+const fmt = new Intl.DateTimeFormat("en", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+---
+
+<Base
+  title="Writing (embeds) · Hrishabh Jain"
+  description="Posts and articles by Hrishabh Jain, shown as native X and LinkedIn embeds."
+  ogType="website"
+  noindex
+>
+  <Nav />
+  <main class="wrap page">
+    <header class="intro">
+      <p class="eyebrow">
+        <span class="dash" aria-hidden="true"></span>
+        <span class="label">{posts.length} pieces · embed view</span>
+      </p>
+      <h1>Writing<span class="dot">.</span></h1>
+      <p class="lede">The same posts, straight from the source. Long reads on Medium, quick takes on LinkedIn and X.</p>
+      <ViewSwitch current="embeds" />
+    </header>
+
+    <div class="masonry">
+      {posts.map((p) => {
+        const li = p.platform === "linkedin" ? linkedInEmbedUrl(p) : undefined;
+        return (
+          <div class:list={["item", p.platform]} data-reveal>
+            {p.platform === "x" && (
+              <blockquote class="twitter-tweet" data-theme="dark" data-dnt="true" data-conversation="none">
+                <p lang="en" dir="ltr">{p.text}</p>
+                &mdash; Hrishabh Jain (@hrishabh_hj) <a href={p.url}>{fmt.format(new Date(p.date))}</a>
+              </blockquote>
+            )}
+
+            {li && (
+              <iframe
+                src={li}
+                title={`LinkedIn post by Hrishabh Jain${p.title ? `: ${p.title}` : ""}`}
+                loading="lazy"
+                height="400"
+                allowfullscreen
+              />
+            )}
+
+            {(p.platform === "medium" || (p.platform === "linkedin" && !li)) && (
+              <a class="card" href={p.url} target="_blank" rel="noopener">
+                {p.image && <img src={p.image} alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" />}
+                <div class="card-body">
+                  <div class="card-top">
+                    <span class="logo" aria-hidden="true">M</span>
+                    <div>
+                      <p class="who">Hrishabh Jain</p>
+                      <p class="sub">{fmt.format(new Date(p.date))}{p.readingMinutes && ` · ${p.readingMinutes} min read`}</p>
+                    </div>
+                  </div>
+                  {p.title && <h2>{p.title}</h2>}
+                  <p class="ex">{p.text.replace(/\s*\n+\s*/g, " ")}</p>
+                  <p class="cta">Read on Medium ↗</p>
+                </div>
+              </a>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  </main>
+  <Footer num="" />
+</Base>
+
+<script is:inline async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<style>
+  .page { padding-top: clamp(48px, 8vw, 96px); }
+  .eyebrow { display: flex; align-items: center; gap: 12px; }
+  .dash { width: 32px; height: 2px; background: var(--accent); }
+  .eyebrow .label { color: var(--fg-2); }
+  h1 { margin-top: 16px; font-size: clamp(56px, 10vw, 136px); font-weight: 900; line-height: 0.86; letter-spacing: -0.055em; }
+  .dot { color: var(--accent); }
+  .lede { margin-top: 24px; max-width: 34em; font-size: clamp(16px, 1.6vw, 20px); line-height: 1.45; color: var(--fg-2); }
+
+  .masonry { columns: 3 320px; column-gap: 24px; margin-top: clamp(40px, 6vw, 64px); }
+  .item { break-inside: avoid; margin-bottom: 24px; }
+  .item :global(.twitter-tweet) { margin: 0 !important; }
+  /* Pre-render fallback for the X embed (replaced once widgets.js loads). */
+  blockquote.twitter-tweet {
+    border: 1px solid #2f3336;
+    border-radius: 12px;
+    padding: 16px;
+    color: var(--fg-2);
+    font-size: 15px;
+    white-space: pre-line;
+  }
+  blockquote.twitter-tweet a { color: var(--accent); }
+
+  iframe {
+    display: block;
+    width: 100%;
+    border: 0;
+    border-radius: 8px;
+    background: #fff;
+  }
+
+  .card {
+    display: block;
+    border: 1px solid #2f3336;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
+    transition: border-color 0.2s ease;
+  }
+  .card:hover { border-color: #4a4f55; }
+  .card img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-bottom: 1px solid #2f3336; }
+  .card-body { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+  .card-top { display: flex; align-items: center; gap: 10px; }
+  .logo {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: grid; place-items: center;
+    background: var(--fg); color: #000;
+    font-family: Georgia, serif; font-weight: 700; font-size: 18px;
+  }
+  .who { font-weight: 700; font-size: 15px; }
+  .sub { font-size: 13px; color: var(--muted); }
+  .card h2 { font-size: 19px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
+  .ex { font-size: 15px; color: var(--fg-2); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; overflow: hidden; }
+  .cta { font-size: 14px; font-weight: 600; color: var(--accent); }
+</style>

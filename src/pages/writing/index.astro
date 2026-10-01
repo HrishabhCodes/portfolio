@@ -1,11 +1,12 @@
 ---
-import Base from "../layouts/Base.astro";
-import Nav from "../components/Nav.astro";
-import Footer from "../components/Footer.astro";
-import WritingCard from "../components/WritingCard.astro";
-import { getPosts, PLATFORM_LABEL } from "../lib/writing-data";
-import { buildWritingJsonLd } from "../lib/schema";
-import type { Post } from "../lib/writing";
+import Base from "../../layouts/Base.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+import WritingCard from "../../components/WritingCard.astro";
+import ViewSwitch from "../../components/ViewSwitch.astro";
+import { getPosts, PLATFORM_LABEL } from "../../lib/writing-data";
+import { buildWritingJsonLd } from "../../lib/schema";
+import type { Post } from "../../lib/writing";
 
 const posts = await getPosts();
 const pageUrl = new URL("/writing", Astro.site).href;
@@ -43,6 +44,7 @@ const filters = [
         Notes on AI agents, RAG, GEO and building things that hold up in production. Long reads on Medium,
         quick takes on LinkedIn and X.
       </p>
+      <ViewSwitch current="cards" />
 
       {filters.length > 2 && (
         <div class="filters" role="group" aria-label="Filter by platform">
@@ -102,7 +104,7 @@ const filters = [
   .dot { color: var(--accent); }
   .lede { margin-top: 24px; max-width: 34em; font-size: clamp(16px, 1.6vw, 20px); line-height: 1.45; color: var(--fg-2); }
 
-  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 36px; }
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
   .filters button {
     font-weight: 600;
     font-size: 14px;
