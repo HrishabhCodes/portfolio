@@ -1,6 +1,6 @@
 {
   "username": "HrishabhCodes",
-  "fetchedAt": "2026-10-01T06:53:44.601Z",
+  "fetchedAt": "2026-10-01T07:54:27.655Z",
   "totalStars": 24,
   "topLanguages": [
     {
@@ -8,7 +8,7 @@
       "count": 2
     },
     {
-      "name": "CSS",
+      "name": "Astro",
       "count": 1
     },
     {
@@ -17,6 +17,14 @@
     }
   ],
   "recent": [
+    {
+      "name": "portfolio",
+      "description": "My portfolio website.",
+      "url": "https://github.com/HrishabhCodes/portfolio",
+      "language": "Astro",
+      "stars": 0,
+      "pushedAt": "2026-10-01T07:51:35Z"
+    },
     {
       "name": "geo-citation-diagnostic",
       "description": "GEO (generative engine optimization) diagnostics: compare your page with the pages AI answer engines actually cite, using Jev for typed, confidence-scored judgments.",
@@ -34,16 +42,8 @@
       "pushedAt": "2026-09-24T04:00:01Z"
     },
     {
-      "name": "portfolio",
-      "description": "My portfolio website.",
-      "url": "https://github.com/HrishabhCodes/portfolio",
-      "language": "CSS",
-      "stars": 0,
-      "pushedAt": "2026-03-01T07:02:59Z"
-    },
-    {
       "name": "Camera-and-Gallery",
-      "description": "\ud83d\udcf8 A web app made by using Web APIs to capture photos, record videos and store them in a gallery.",
+      "description": "📸 A web app made by using Web APIs to capture photos, record videos and store them in a gallery.",
       "url": "https://github.com/HrishabhCodes/Camera-and-Gallery",
       "language": "Jupyter Notebook",
       "stars": 0,

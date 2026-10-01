@@ -11,7 +11,7 @@ const stats = [
   { k: "Contributions · last year", v: nf.format(gh.contributions.total) },
   { k: "Public repos", v: nf.format(gh.publicRepos) },
   { k: "Stars earned", v: nf.format(gh.totalStars) },
-  { k: "Top language · last 12 months", v: gh.topLanguages[0]?.name ?? "TypeScript" },
+  { k: "Top language", v: gh.topLanguages[0]?.name ?? "TypeScript" },
 ].filter((s) => s.v !== "0");
 
 // GitHub weeks start on Sunday: pad so each column is one week.
