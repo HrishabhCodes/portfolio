@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-01T08:30:17.790Z",
+  "fetchedAt": "2026-10-01T09:40:19.179Z",
   "posts": [
     {
       "platform": "linkedin",
@@ -18,6 +18,87 @@
       "date": "2026-09-25T12:00:00.000Z",
       "text": "asked AI for the best whey protein in india 🏋️\n\nthe protein brand from a very famous roast show? not cited. not even mentioned. millions of views, zero AI love.\n\nthe winner was the brand that wrote a page called \"Best Whey Protein in India\". comparison tables, FAQ, 2k+ words. the…",
       "source": "https://x.com/hrishabh_hj/status/2103469380017492453"
+    },
+    {
+      "platform": "x",
+      "url": "https://x.com/hrishabh_hj/status/1771545757520138509",
+      "date": "2024-03-23T12:00:00.000Z",
+      "text": "Database replication is the process of copying data from one database to another. Replication increases the availability and scalability of databases. There are two types of replication: Master-Slave Replication and Master-Master Replication.",
+      "tags": [
+        "systemdesign",
+        "databases",
+        "techtalks"
+      ],
+      "source": "https://x.com/hrishabh_hj/status/1771545757520138509"
+    },
+    {
+      "platform": "x",
+      "url": "https://x.com/hrishabh_hj/status/1771154318227394958",
+      "date": "2024-03-22T12:00:00.000Z",
+      "text": "Webhooks enable seamless communication between software systems, automating processes based on specific events. Integrating payment gateways with webhooks ensures instant updates after purchases, streamlining operations and enhancing customer experiences.",
+      "tags": [
+        "webhooks",
+        "automation"
+      ],
+      "source": "https://x.com/hrishabh_hj/status/1771154318227394958"
+    },
+    {
+      "platform": "x",
+      "url": "https://x.com/hrishabh_hj/status/1770654062104510515",
+      "date": "2024-03-21T12:00:00.000Z",
+      "text": "Elevate software efficiency with message queues! They enable seamless communication, asynchronous processing, and optimize resource utilization. Perfect for job scheduling, event-driven architectures, and distributed systems.    🚀",
+      "tags": [
+        "systemdesign",
+        "queues",
+        "techtalks"
+      ],
+      "source": "https://x.com/hrishabh_hj/status/1770654062104510515"
+    },
+    {
+      "platform": "x",
+      "url": "https://x.com/hrishabh_hj/status/1770305115418739127",
+      "date": "2024-03-20T12:00:00.000Z",
+      "text": "Explore the top load balancing algorithms - Round Robin, Least Connections, Weighted Round Robin, Least Response Time, Randomized Load Balancing, IP Hash.",
+      "tags": [
+        "systemdesign",
+        "loadbalancing",
+        "softwareengineering"
+      ],
+      "source": "https://x.com/hrishabh_hj/status/1770305115418739127"
+    },
+    {
+      "platform": "x",
+      "url": "https://x.com/hrishabh_hj/status/1769929286709125539",
+      "date": "2024-03-19T12:00:00.000Z",
+      "text": "Redis turbocharges Node server caching, optimizing performance & scaling. When a request comes in, the Node.js server first checks Redis. If the data's there, it's served lightning-fast! If not, we grab it from the database, then save it in Redis for next time.",
+      "tags": [
+        "nodejs",
+        "redis"
+      ],
+      "source": "https://x.com/hrishabh_hj/status/1769929286709125539"
+    },
+    {
+      "platform": "x",
+      "url": "https://x.com/hrishabh_hj/status/1769566901011935455",
+      "date": "2024-03-18T12:00:00.000Z",
+      "text": "Benefits of using a Reverse Proxy for optimized security, efficiency, and reliability in your Node.js app:\n\n- SSL Termination\n- Recovery\n- gzip Compression\n- Buffering\n- Load Balancing\n- Enterprise Routing\n- Caching Static Content",
+      "tags": [
+        "nodejs",
+        "reverseproxy",
+        "performance"
+      ],
+      "source": "https://x.com/hrishabh_hj/status/1769566901011935455"
+    },
+    {
+      "platform": "x",
+      "url": "https://x.com/hrishabh_hj/status/1769263613653741590",
+      "date": "2024-03-17T12:00:00.000Z",
+      "text": "Reverse proxy is like a superhero guarding your servers from evil internet baddies, while forward proxy is the undercover agent fetching stuff for you, so you stay anonymous and secure online. They're the dynamic duo of web security and privacy!",
+      "tags": [
+        "techtalks",
+        "proxies"
+      ],
+      "source": "https://x.com/hrishabh_hj/status/1769263613653741590"
     },
     {
       "platform": "medium",

@@ -105,7 +105,14 @@ export async function fetchX(url: string): Promise<Post> {
   const tweetUrl = url.replace("://x.com/", "://twitter.com/");
   const json = JSON.parse(await getText(`https://publish.twitter.com/oembed?omit_script=1&dnt=true&url=${encodeURIComponent(tweetUrl)}`)) as { html: string; url: string };
   const p = json.html.match(/<p[^>]*>([\s\S]*?)<\/p>/)?.[1] ?? "";
-  const text = stripHtml(p.replace(/<a[^>]*>pic\.twitter\.com\/\w+<\/a>/g, "").replace(/<a[^>]*>(https?:\/\/t\.co\/\w+)<\/a>/g, ""));
+  // Hashtags become tags; media and t.co links are dropped from the excerpt.
+  const tags = [...p.matchAll(/<a[^>]*\/hashtag\/[^>]*>#(\w+)<\/a>/g)].map((m) => m[1].toLowerCase());
+  const text = stripHtml(
+    p
+      .replace(/<a[^>]*\/hashtag\/[^>]*>#\w+<\/a>/g, "")
+      .replace(/<a[^>]*>pic\.twitter\.com\/\w+<\/a>/g, "")
+      .replace(/<a[^>]*>(https?:\/\/t\.co\/\w+)<\/a>/g, ""),
+  ).replace(/[ \t]+$/gm, "");
   const dateText = json.html.match(/<a[^>]*>([A-Z][a-z]+ \d{1,2}, \d{4})<\/a>\s*<\/blockquote>/)?.[1];
   if (!dateText) throw new Error(`No date in oEmbed for ${url}`);
   return {
@@ -113,6 +120,7 @@ export async function fetchX(url: string): Promise<Post> {
     url: json.url.split("?")[0],
     date: new Date(`${dateText} 12:00 UTC`).toISOString(),
     text,
+    ...(tags.length && { tags: tags.slice(0, 3) }),
   };
 }
 
