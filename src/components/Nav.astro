@@ -1,0 +1,58 @@
+---
+import { profile } from "../data/profile";
+
+const links = [
+  { href: "#experience", label: "Work" },
+  { href: "#github", label: "GitHub" },
+  { href: "#projects", label: "Projects" },
+  { href: "#stack", label: "Stack" },
+  { href: "#education", label: "Education" },
+  { href: "#faq", label: "FAQ" },
+];
+---
+
+<header class="nav">
+  <nav class="wrap inner" aria-label="Primary">
+    <a href="#top" class="brand">{profile.name} <span class="dot" aria-hidden="true">●</span></a>
+    <ul class="links">
+      {links.map((l) => <li><a class="link-u" href={l.href}>{l.label}</a></li>)}
+    </ul>
+    <a href="#contact" class="cta">Contact</a>
+  </nav>
+</header>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .inner {
+    height: var(--nav-h);
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .brand { white-space: nowrap; }
+  .dot { color: var(--accent); font-size: 10px; vertical-align: 2px; }
+  .links { display: flex; gap: 22px; margin-left: auto; color: var(--fg-2); }
+  .links a:hover { color: var(--fg); }
+  .cta {
+    background: var(--accent);
+    color: var(--accent-ink);
+    padding: 6px 14px;
+    transition: background 0.2s ease;
+  }
+  .cta:hover { background: var(--fg); }
+
+  @media (max-width: 860px) {
+    .links { display: none; }
+    .cta { margin-left: auto; }
+  }
+</style>

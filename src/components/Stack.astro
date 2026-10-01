@@ -1,0 +1,41 @@
+---
+import Section from "./Section.astro";
+import { stack } from "../data/stack";
+---
+
+<Section id="stack" num="05" title="Stack" label="tools I reach for">
+  <dl class="stack">
+    {stack.map((s) => (
+      <div class="row" data-reveal>
+        <dt>
+          <span class="group">{s.group}</span>
+          <span class="label">{s.note}</span>
+        </dt>
+        <dd>
+          <ul>
+            {s.items.map((it) => <li>{it}</li>)}
+          </ul>
+        </dd>
+      </div>
+    ))}
+  </dl>
+</Section>
+
+<style>
+  .row {
+    display: grid;
+    grid-template-columns: minmax(180px, 30%) 1fr;
+    gap: 16px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .row:first-child { padding-top: 0; }
+  dt { display: flex; flex-direction: column; gap: 4px; }
+  .group { font-size: 18px; font-weight: 800; letter-spacing: -0.03em; }
+  ul { display: flex; flex-wrap: wrap; gap: 4px 0; font-size: clamp(15px, 1.5vw, 18px); font-weight: 500; letter-spacing: -0.02em; }
+  li:not(:last-child)::after { content: "/"; color: var(--accent); margin: 0 0.45em; font-weight: 400; }
+
+  @media (max-width: 640px) {
+    .row { grid-template-columns: 1fr; gap: 10px; }
+  }
+</style>

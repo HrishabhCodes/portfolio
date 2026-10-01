@@ -1,0 +1,49 @@
+---
+import Base from "../layouts/Base.astro";
+import Nav from "../components/Nav.astro";
+import Hero from "../components/Hero.astro";
+import About from "../components/About.astro";
+import Experience from "../components/Experience.astro";
+import GitHub from "../components/GitHub.astro";
+import Projects from "../components/Projects.astro";
+import Stack from "../components/Stack.astro";
+import Education from "../components/Education.astro";
+import FAQ from "../components/FAQ.astro";
+import Footer from "../components/Footer.astro";
+import { profile } from "../data/profile";
+---
+
+<Base title={`${profile.name} · AI Engineer in Bengaluru | Multi-Agent Systems & RAG`}>
+  <Nav />
+  <main>
+    <Hero />
+    <About />
+    <Experience />
+    <GitHub />
+    <Projects />
+    <Stack />
+    <Education />
+    <FAQ />
+  </main>
+  <Footer />
+</Base>
+
+<script>
+  const els = document.querySelectorAll("[data-reveal]");
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            e.target.classList.add("is-in");
+            io.unobserve(e.target);
+          }
+        }
+      },
+      { rootMargin: "0px 0px -8% 0px" },
+    );
+    els.forEach((el) => io.observe(el));
+  } else {
+    els.forEach((el) => el.classList.add("is-in"));
+  }
+</script>

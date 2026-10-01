@@ -1,0 +1,106 @@
+---
+import { formatMonth, type Role } from "../data/experience";
+
+interface Props {
+  role: Role;
+  index: number;
+}
+
+const { role: r, index } = Astro.props;
+---
+
+<li class="role" data-reveal>
+  <span class="n">{String(index + 1).padStart(2, "0")}</span>
+
+  <div class="body">
+    <h3>
+      <span class="title">{r.title}</span>
+      <span class="at">
+        {r.companyUrl
+          ? <a class="link-u" href={r.companyUrl} target="_blank" rel="noopener">{r.company}</a>
+          : r.company}
+        {r.companyNote && <span class="note"> ({r.companyNote})</span>}
+      </span>
+    </h3>
+    <p class="where label">{r.type} · {r.location}</p>
+    <p class="summary">{r.summary}</p>
+    <ul class="points">
+      {r.highlights.map((h) => <li>{h}</li>)}
+    </ul>
+    {r.more && (
+      <details>
+        <summary class="label">+ {r.more.length} more</summary>
+        <ul class="points">
+          {r.more.map((h) => <li>{h}</li>)}
+        </ul>
+      </details>
+    )}
+    <ul class="tags" aria-label="Skills used">
+      {r.skills.map((s) => <li class="tag">{s}</li>)}
+    </ul>
+  </div>
+
+  <p class="when">
+    <time datetime={r.start}>{formatMonth(r.start)}</time>
+    <span aria-hidden="true">&nbsp;–&nbsp;</span>
+    <span class="sr-only">to</span>
+    {r.end ? <time datetime={r.end}>{formatMonth(r.end)}</time> : <span class="now">Now</span>}
+  </p>
+</li>
+
+<style>
+  .role {
+    display: grid;
+    grid-template-columns: 56px 1fr 200px;
+    gap: 16px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .n { font-family: var(--mono); font-size: 13px; color: var(--accent); padding-top: 6px; }
+  h3 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 0.4em;
+    font-size: clamp(19px, 1.9vw, 24px);
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+  }
+  .title { font-weight: 800; }
+  .at { font-weight: 400; color: var(--fg-2); }
+  .at::before { content: "@ "; color: var(--accent); }
+  .note { font-size: 0.6em; color: var(--muted); letter-spacing: 0; }
+  .where { margin-top: 8px; }
+  .summary { margin-top: 14px; font-size: 16px; color: var(--fg); max-width: 44em; }
+  .points { margin-top: 12px; max-width: 46em; color: var(--fg-2); font-size: 15px; }
+  .points li { position: relative; padding-left: 20px; margin-top: 8px; }
+  .points li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 8px; height: 2px; background: var(--accent); }
+
+  details { margin-top: 10px; }
+  summary {
+    display: inline-block;
+    cursor: pointer;
+    color: var(--accent);
+    padding: 4px 0;
+    list-style: none;
+  }
+  summary::-webkit-details-marker { display: none; }
+  details[open] summary { color: var(--muted); }
+  details[open] summary::after { content: " (showing all)"; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
+  .when {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--muted);
+    text-align: right;
+    padding-top: 6px;
+    white-space: nowrap;
+  }
+  .now { color: var(--accent); }
+
+  @media (max-width: 760px) {
+    .role { grid-template-columns: 36px 1fr; }
+    .when { grid-column: 2; grid-row: 1; text-align: left; padding-top: 0; }
+    .n { grid-row: 1 / span 2; }
+  }
+</style>

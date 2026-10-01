@@ -1,0 +1,23 @@
+---
+import Section from "./Section.astro";
+import { faq } from "../data/profile";
+---
+
+<Section id="faq" num="07" title="FAQ" label="quick answers">
+  <dl class="faq">
+    {faq.map((f, i) => (
+      <div class="item" data-reveal>
+        <dt><span class="n" aria-hidden="true">Q{i + 1}</span>{f.q}</dt>
+        <dd>{f.a}</dd>
+      </div>
+    ))}
+  </dl>
+</Section>
+
+<style>
+  .faq { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); gap: 0 40px; }
+  .item { border-top: 1px solid var(--line); padding: 20px 0 28px; }
+  dt { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.25; }
+  .n { font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--accent); margin-right: 12px; vertical-align: 3px; }
+  dd { margin-top: 10px; color: var(--fg-2); font-size: 15px; }
+</style>

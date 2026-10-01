@@ -1,0 +1,53 @@
+---
+import Section from "./Section.astro";
+import { projects } from "../data/projects";
+---
+
+<Section id="projects" num="04" title="Projects" label="side quests">
+  <ul class="list">
+    {projects.map((p) => (
+      <li class="project" data-reveal>
+        <div class="top">
+          <h3>{p.name}</h3>
+          <span class="year label">{p.year}</span>
+        </div>
+        <p class="tagline">{p.tagline}</p>
+        <p class="desc">{p.description}</p>
+        <ul class="points">
+          {p.points.map((pt) => <li>{pt}</li>)}
+        </ul>
+        <div class="foot">
+          <ul class="tags" aria-label="Built with">
+            {p.stack.map((s) => <li class="tag">{s}</li>)}
+          </ul>
+          {p.links.map((l) => (
+            <a class="go" href={l.href} target="_blank" rel="noopener">{l.label} ↗</a>
+          ))}
+        </div>
+      </li>
+    ))}
+  </ul>
+</Section>
+
+<style>
+  .list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 0 32px; }
+  .project { border-top: 1px solid var(--fg); padding: 20px 0 32px; display: flex; flex-direction: column; }
+  .top { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+  h3 { font-size: clamp(28px, 3.2vw, 40px); font-weight: 900; letter-spacing: -0.05em; line-height: 1; }
+  .tagline { margin-top: 10px; font-size: 16px; font-weight: 600; color: var(--accent); }
+  .desc { margin-top: 10px; color: var(--fg-2); }
+  .points { margin-top: 12px; color: var(--fg-2); font-size: 15px; }
+  .points li { position: relative; padding-left: 20px; margin-top: 6px; }
+  .points li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 8px; height: 2px; background: var(--accent); }
+  .foot { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; margin-top: auto; padding-top: 20px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .go {
+    flex: none;
+    font-weight: 600;
+    background: var(--accent);
+    color: var(--accent-ink);
+    padding: 6px 14px;
+    transition: background 0.2s ease;
+  }
+  .go:hover { background: var(--fg); }
+</style>

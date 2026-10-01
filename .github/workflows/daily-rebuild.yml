@@ -1,0 +1,16 @@
+# Rebuilds the site daily so GitHub stats in the static HTML stay fresh.
+# Setup: Vercel → Project → Settings → Git → Deploy Hooks → create one for
+# the production branch, then save its URL as the repo secret VERCEL_DEPLOY_HOOK.
+name: Daily rebuild
+
+on:
+  schedule:
+    - cron: "30 0 * * *" # 06:00 IST
+  workflow_dispatch:
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Vercel deploy hook
+        run: curl -fsS -X POST "${{ secrets.VERCEL_DEPLOY_HOOK }}"

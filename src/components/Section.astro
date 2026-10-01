@@ -1,0 +1,42 @@
+---
+interface Props {
+  id: string;
+  num: string;
+  title: string;
+  label?: string;
+  labelHref?: string;
+}
+
+const { id, num, title, label, labelHref } = Astro.props;
+---
+
+<section id={id} class="section wrap" aria-labelledby={`${id}-title`}>
+  <header class="head" data-reveal>
+    <p class="eyebrow">
+      <span class="num">{num}</span>
+      <span class="dash" aria-hidden="true"></span>
+      {label && (labelHref
+        ? <a class="label side link-u" href={labelHref} target="_blank" rel="noopener">{label} ↗</a>
+        : <span class="label side">{label}</span>)}
+    </p>
+    <h2 id={`${id}-title`}>{title}</h2>
+  </header>
+  <slot />
+</section>
+
+<style>
+  .section { padding-block: clamp(80px, 11vw, 144px) 0; }
+  .head { margin-bottom: clamp(28px, 4vw, 44px); }
+  .eyebrow { display: flex; align-items: center; gap: 12px; }
+  .num { font-family: var(--mono); font-size: 13px; color: var(--accent); }
+  .dash { width: 32px; height: 2px; background: var(--accent); }
+  .side { color: var(--fg-2); }
+  a.side:hover { color: var(--fg); }
+  h2 {
+    margin-top: 14px;
+    font-size: clamp(32px, 4.6vw, 58px);
+    font-weight: 800;
+    letter-spacing: -0.045em;
+    line-height: 0.95;
+  }
+</style>

@@ -1,0 +1,71 @@
+---
+import Section from "./Section.astro";
+import RoleItem from "./RoleItem.astro";
+import { experience } from "../data/experience";
+import { yearsLabel } from "../lib/years";
+
+// Everything after the Gutenberg internship folds into "Earlier".
+const cut = experience.findIndex((r) => r.company === "Gutenberg" && r.type === "Internship") + 1;
+const main = experience.slice(0, cut);
+const earlier = experience.slice(cut);
+const earliestYear = earlier.at(-1)?.start.slice(0, 4);
+const latestYear = earlier[0]?.end?.slice(0, 4);
+---
+
+<Section id="experience" num="02" title="Experience" label={`${yearsLabel()} yrs`}>
+  <ol class="roles">
+    {main.map((role, i) => <RoleItem role={role} index={i} />)}
+  </ol>
+
+  {earlier.length > 0 && (
+    <details class="earlier" data-reveal>
+      <summary>
+        <span class="plus" aria-hidden="true"></span>
+        <span class="what">Earlier: {earlier.length} internships</span>
+        <span class="label">{earlier.map((r) => r.company).join(" · ")} · {earliestYear}–{latestYear}</span>
+      </summary>
+      <ol class="roles" start={cut + 1}>
+        {earlier.map((role, i) => <RoleItem role={role} index={cut + i} />)}
+      </ol>
+    </details>
+  )}
+</Section>
+
+<style>
+  .roles > :global(li:first-child) { padding-top: 0; }
+  .earlier .roles > :global(li:first-child) { padding-top: 24px; }
+
+  summary {
+    display: grid;
+    grid-template-columns: 56px auto 1fr;
+    align-items: baseline;
+    gap: 16px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+    cursor: pointer;
+    list-style: none;
+  }
+  summary::-webkit-details-marker { display: none; }
+  .what { font-size: clamp(17px, 1.6vw, 20px); font-weight: 700; letter-spacing: -0.02em; }
+  summary .label { justify-self: end; }
+  summary:hover .what { color: var(--accent); }
+
+  .plus { position: relative; width: 14px; height: 14px; align-self: center; }
+  .plus::before, .plus::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 14px;
+    height: 2px;
+    background: var(--accent);
+    transition: transform 0.25s ease;
+  }
+  .plus::after { transform: rotate(90deg); }
+  .earlier[open] .plus::after { transform: rotate(0deg); }
+
+  @media (max-width: 760px) {
+    summary { grid-template-columns: 36px 1fr; }
+    summary .label { grid-column: 2; justify-self: start; }
+  }
+</style>

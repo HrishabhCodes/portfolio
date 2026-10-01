@@ -1,0 +1,72 @@
+---
+import "@fontsource-variable/inter-tight";
+import "@fontsource/jetbrains-mono/400.css";
+import "../styles/global.css";
+import Analytics from "@vercel/analytics/astro";
+import SpeedInsights from "@vercel/speed-insights/astro";
+import { getImage } from "astro:assets";
+import Cursor from "../components/Cursor.astro";
+import portraitImg from "../assets/portrait.jpg";
+import { profile, metaDescription } from "../data/profile";
+import { buildJsonLd } from "../lib/schema";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = metaDescription } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL("/og.png", Astro.site).href;
+const portrait = await getImage({ src: portraitImg, width: 800, format: "jpeg" });
+const portraitUrl = new URL(portrait.src, Astro.site).href;
+const jsonLd = buildJsonLd(portraitUrl);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={profile.name} />
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <meta name="theme-color" content="#0b0b0b" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="text/plain" title="LLM summary" href="/llms.txt" />
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content={profile.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${profile.name}, ${profile.jobTitle}`} />
+    <meta property="og:locale" content="en_IN" />
+    <meta property="profile:first_name" content={profile.givenName} />
+    <meta property="profile:last_name" content={profile.familyName} />
+    <meta property="profile:username" content={profile.handle} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@hrishabh_hj" />
+    <meta name="twitter:creator" content="@hrishabh_hj" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, "\\u003c")} />
+    <script is:inline>document.documentElement.classList.add("js");</script>
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+    <Cursor />
+    <slot />
+    <Analytics />
+    <SpeedInsights />
+  </body>
+</html>

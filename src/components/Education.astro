@@ -1,0 +1,50 @@
+---
+import Section from "./Section.astro";
+import { education, certifications } from "../data/education";
+---
+
+<Section id="education" num="06" title="Education" label="& certifications">
+  <div class="grid">
+    <article class="degree" data-reveal>
+      <p class="label">{education.start} — {education.end}</p>
+      <h3>{education.degree}</h3>
+      <p class="school">{education.school}<span>, {education.city}</span></p>
+      <p class="grade">{education.grade}</p>
+    </article>
+
+    <div class="certs" data-reveal>
+      <h3 class="label">Certifications</h3>
+      <ul>
+        {certifications.map((c) => (
+          <li>
+            <span class="cert">{c.name}</span>
+            {c.issuer && <span class="label">{c.issuer}</span>}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(24px, 5vw, 64px); }
+  .degree h3 { margin-top: 10px; font-size: clamp(22px, 2.4vw, 30px); font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; }
+  .school { margin-top: 12px; font-size: 17px; font-weight: 600; }
+  .school span { color: var(--fg-2); font-weight: 400; }
+  .grade {
+    display: inline-block;
+    margin-top: 16px;
+    font-family: var(--mono);
+    font-size: 13px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    padding: 4px 10px;
+  }
+  .certs ul { margin-top: 10px; border-top: 1px solid var(--line); }
+  .certs li { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .cert { font-weight: 600; }
+
+  @media (max-width: 760px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>

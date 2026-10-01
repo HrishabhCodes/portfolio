@@ -1,0 +1,215 @@
+---
+import Section from "./Section.astro";
+import { getGitHubData } from "../lib/github-data";
+
+const gh = await getGitHubData();
+const profileUrl = `https://github.com/${gh.username}`;
+const nf = new Intl.NumberFormat("en-IN");
+const monthYear = new Intl.DateTimeFormat("en", { month: "short", year: "numeric", timeZone: "UTC" });
+
+const stats = [
+  { k: "Contributions · last year", v: nf.format(gh.contributions.total) },
+  { k: "Public repos", v: nf.format(gh.publicRepos) },
+  { k: "Stars earned", v: nf.format(gh.totalStars) },
+  { k: "Top language · last 12 months", v: gh.topLanguages[0]?.name ?? "TypeScript" },
+].filter((s) => s.v !== "0");
+
+// GitHub weeks start on Sunday: pad so each column is one week.
+const days = gh.contributions.days;
+const lead = days.length ? new Date(days[0].date + "T00:00:00Z").getUTCDay() : 0;
+const asOf = days.at(-1)?.date ?? gh.fetchedAt.slice(0, 10);
+---
+
+<Section id="github" num="03" title="GitHub" label={`@${gh.username}`} labelHref={profileUrl}>
+  <dl class="stats" data-reveal>
+    {stats.map((s) => (
+      <div>
+        <dt class="label">{s.k}</dt>
+        <dd>{s.v}</dd>
+      </div>
+    ))}
+  </dl>
+
+  <figure class="graph-fig" data-reveal>
+    <div class="pager" hidden>
+      <button type="button" class="label" data-dir="-1" aria-label="Show earlier contributions">← Earlier</button>
+      <button type="button" class="label" data-dir="1" aria-label="Show later contributions">Later →</button>
+    </div>
+    <div class="scroller">
+      <div
+        class="graph"
+        role="img"
+        aria-label={`${nf.format(gh.contributions.total)} GitHub contributions in the year up to ${asOf}`}
+      >
+        {Array.from({ length: lead }, () => <i class="pad" />)}
+        {days.map((d) => <i class={`l${d.level}`} data-count={d.count} data-date={d.date} />)}
+      </div>
+    </div>
+    <div class="tip label" role="tooltip" hidden></div>
+    <figcaption class="label">
+      <span>Contribution activity, last 12 months</span>
+      <span class="legend" aria-hidden="true">Less <i class="l0" /><i class="l1" /><i class="l2" /><i class="l3" /><i class="l4" /> More</span>
+    </figcaption>
+  </figure>
+
+  {gh.recent.length > 0 && (
+    <div class="recent" data-reveal>
+      <h3 class="label">Recently pushed</h3>
+      <ul>
+        {gh.recent.map((r) => (
+          <li>
+            <a href={r.url} target="_blank" rel="noopener">
+              <span class="repo">{r.name}<span class="arrow" aria-hidden="true">↗</span></span>
+              <span class="desc">{r.description ?? "No description, just vibes and commits."}</span>
+              <span class="meta label">
+                {r.language && <span>{r.language}</span>}
+                <span>Updated <time datetime={r.pushedAt}>{monthYear.format(new Date(r.pushedAt))}</time></span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )}
+</Section>
+
+<style>
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .stats > div { padding: 18px 16px 18px 0; }
+  .stats > div + div { border-left: 1px solid var(--line); padding-left: 16px; }
+  dd { font-size: clamp(26px, 3vw, 40px); font-weight: 900; letter-spacing: -0.05em; line-height: 1; margin-top: 10px; }
+
+  .graph-fig { margin-top: 32px; position: relative; }
+  .graph i[data-date] { cursor: pointer; }
+  .graph i[data-date]:hover, .graph i.on { outline: 1px solid var(--fg); outline-offset: -1px; }
+  .tip {
+    position: absolute;
+    z-index: 5;
+    transform: translate(-50%, calc(-100% - 8px));
+    background: var(--fg);
+    color: var(--accent-ink);
+    padding: 6px 10px;
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: 0.04em;
+  }
+  .scroller { overflow-x: auto; padding-bottom: 6px; scrollbar-width: none; }
+  .scroller::-webkit-scrollbar { display: none; }
+  .pager { display: flex; justify-content: space-between; margin-bottom: 10px; }
+  .pager[hidden] { display: none; }
+  .pager button { color: var(--accent); padding: 4px 0; }
+  .pager button:disabled { color: var(--muted); opacity: 0.5; cursor: default; }
+  .graph {
+    display: grid;
+    grid-template-rows: repeat(7, 1fr);
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(10px, 1fr);
+    gap: 3px;
+    min-width: 640px;
+  }
+  .graph i, .legend i { display: block; aspect-ratio: 1; background: var(--c0); }
+  .graph i.pad { background: transparent; }
+  .graph .l1, .legend .l1 { background: var(--c1); }
+  .graph .l2, .legend .l2 { background: var(--c2); }
+  .graph .l3, .legend .l3 { background: var(--c3); }
+  .graph .l4, .legend .l4 { background: var(--c4); }
+  figcaption { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 12px; }
+  .legend { display: inline-flex; align-items: center; gap: 4px; }
+  .legend i { width: 10px; }
+
+  .recent { margin-top: 48px; }
+  .recent ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+    margin-top: 12px;
+    border-top: 1px solid var(--line);
+  }
+  .recent li { border-bottom: 1px solid var(--line); }
+  .recent a {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    height: 100%;
+    padding: 18px 16px 18px 0;
+    transition: background 0.2s ease;
+  }
+  .recent a:hover { background: var(--bg-2); }
+  .repo { font-size: 17px; font-weight: 700; letter-spacing: -0.02em; }
+  .arrow { color: var(--accent); margin-left: 6px; font-size: 0.8em; }
+  .desc { color: var(--fg-2); font-size: 15px; }
+  .meta { display: flex; gap: 14px; margin-top: auto; padding-top: 6px; }
+
+  @media (max-width: 560px) {
+    .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .stats > div + div:nth-child(3) { border-left: 0; padding-left: 0; }
+    .stats > div:nth-child(n + 3) { border-top: 1px solid var(--line); }
+  }
+</style>
+
+<script>
+  const fig = document.querySelector<HTMLElement>(".graph-fig");
+  const tip = fig?.querySelector<HTMLElement>(".tip");
+  const fmt = new Intl.DateTimeFormat("en", { weekday: "short", day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
+  let active: HTMLElement | null = null;
+
+  function show(cell: HTMLElement) {
+    if (!fig || !tip) return;
+    const n = Number(cell.dataset.count);
+    const date = fmt.format(new Date(cell.dataset.date + "T00:00:00Z"));
+    tip.textContent = `${n === 0 ? "No" : n} contribution${n === 1 ? "" : "s"} · ${date}`;
+    tip.hidden = false;
+    const c = cell.getBoundingClientRect();
+    const f = fig.getBoundingClientRect();
+    const half = tip.offsetWidth / 2;
+    const x = Math.min(Math.max(c.left + c.width / 2 - f.left, half), f.width - half);
+    tip.style.left = `${x}px`;
+    tip.style.top = `${c.top - f.top}px`;
+    active?.classList.remove("on");
+    active = cell;
+    cell.classList.add("on");
+  }
+
+  function hide() {
+    if (tip) tip.hidden = true;
+    active?.classList.remove("on");
+    active = null;
+  }
+
+  fig?.addEventListener("pointerover", (e) => {
+    const cell = (e.target as HTMLElement).closest<HTMLElement>("i[data-date]");
+    if (cell) show(cell);
+  });
+  fig?.querySelector(".graph")?.addEventListener("pointerleave", hide);
+  fig?.querySelector(".scroller")?.addEventListener("scroll", hide, { passive: true });
+
+  // Narrow screens: start at the latest weeks; page back with buttons.
+  const scroller = fig?.querySelector<HTMLElement>(".scroller");
+  const pager = fig?.querySelector<HTMLElement>(".pager");
+  if (scroller && pager) {
+    const [prev, next] = pager.querySelectorAll<HTMLButtonElement>("button");
+    const sync = () => {
+      const max = scroller.scrollWidth - scroller.clientWidth;
+      pager.hidden = max <= 1;
+      prev.disabled = scroller.scrollLeft <= 1;
+      next.disabled = scroller.scrollLeft >= max - 1;
+    };
+    const toLatest = () => {
+      scroller.scrollLeft = scroller.scrollWidth;
+      sync();
+    };
+    pager.addEventListener("click", (e) => {
+      const btn = (e.target as HTMLElement).closest<HTMLButtonElement>("button[data-dir]");
+      if (!btn) return;
+      const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      scroller.scrollBy({ left: Number(btn.dataset.dir) * scroller.clientWidth * 0.8, behavior: calm ? "auto" : "smooth" });
+      if (calm) sync();
+    });
+    scroller.addEventListener("scroll", sync, { passive: true });
+    new ResizeObserver(toLatest).observe(scroller);
+  }
+</script>

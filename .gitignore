@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+.superpowers/
+
+# Astro
+.astro/
+.env
