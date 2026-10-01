@@ -25,7 +25,8 @@ const { id, num, title, label, labelHref } = Astro.props;
 </section>
 
 <style>
-  .section { padding-block: clamp(80px, 11vw, 144px) 0; }
+  /* Margin, not padding: anchor jumps land on the heading instead of the gap above it. */
+  .section { margin-top: clamp(80px, 11vw, 144px); }
   .head { margin-bottom: clamp(28px, 4vw, 44px); }
   .eyebrow { display: flex; align-items: center; gap: 12px; }
   .num { font-family: var(--mono); font-size: 13px; color: var(--accent); }

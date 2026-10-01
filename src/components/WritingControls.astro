@@ -1,0 +1,33 @@
+---
+import type { Post } from "../lib/writing";
+import ViewSwitch from "./ViewSwitch.astro";
+import WritingFilters from "./WritingFilters.astro";
+
+interface Props {
+  posts: Post[];
+  view: "list" | "embeds";
+}
+
+const { posts, view } = Astro.props;
+---
+
+<div class="controls">
+  <WritingFilters posts={posts} />
+  <ViewSwitch current={view} />
+</div>
+
+<style>
+  .controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px 24px;
+    margin-top: 32px;
+  }
+
+  /* Phones: view switch on top at full width, filters as a swipe row below. */
+  @media (max-width: 640px) {
+    .controls { flex-direction: column-reverse; flex-wrap: nowrap; align-items: stretch; gap: 12px; margin-top: 28px; }
+  }
+</style>

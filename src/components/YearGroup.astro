@@ -23,8 +23,12 @@ const { year, count } = Astro.props;
     font-weight: 900;
     line-height: 0.9;
     letter-spacing: -0.05em;
-    color: transparent;
-    -webkit-text-stroke: 1px #4a4a4a;
+    /* The variable font has overlapping contours (e.g. the "4"), which a plain
+       stroke traces. Paint the stroke first, then fill with the page colour on
+       top: the overlaps disappear and the outer edge shows at half width. */
+    color: var(--bg);
+    -webkit-text-stroke: 2px #4a4a4a;
+    paint-order: stroke fill;
   }
   .count { color: var(--accent); }
   .content { min-width: 0; }

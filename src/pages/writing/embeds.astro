@@ -2,8 +2,7 @@
 import Base from "../../layouts/Base.astro";
 import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
-import ViewSwitch from "../../components/ViewSwitch.astro";
-import WritingFilters from "../../components/WritingFilters.astro";
+import WritingControls from "../../components/WritingControls.astro";
 import YearGroup from "../../components/YearGroup.astro";
 import { groupByYear } from "../../lib/writing-group";
 import { getPosts } from "../../lib/writing-data";
@@ -28,8 +27,7 @@ const fmt = new Intl.DateTimeFormat("en", { day: "numeric", month: "long", year:
       </p>
       <h1>Writing<span class="dot">.</span></h1>
       <p class="lede">The same posts, straight from the source. Long reads on Medium, quick takes on LinkedIn and X.</p>
-      <ViewSwitch current="embeds" />
-      <WritingFilters posts={posts} />
+      <WritingControls posts={posts} view="embeds" />
     </header>
 
     {groupByYear(posts).map(([year, list]) => (
@@ -40,7 +38,7 @@ const fmt = new Intl.DateTimeFormat("en", { day: "numeric", month: "long", year:
         return (
           <div class:list={["item", p.platform]} data-platform={p.platform} data-reveal>
             {p.platform === "x" && (
-              <blockquote class="twitter-tweet" data-theme="dark" data-dnt="true" data-conversation="none">
+              <blockquote class="x-embed" data-embed="x" data-theme="dark" data-dnt="true" data-conversation="none">
                 <p lang="en" dir="ltr">{p.text}</p>
                 &mdash; Hrishabh Jain (@hrishabh_hj) <a href={p.url}>{fmt.format(new Date(p.date))}</a>
               </blockquote>
@@ -48,9 +46,9 @@ const fmt = new Intl.DateTimeFormat("en", { day: "numeric", month: "long", year:
 
             {li && (
               <iframe
-                src={li}
+                data-embed="linkedin"
+                data-src={li}
                 title={`LinkedIn post by Hrishabh Jain${p.title ? `: ${p.title}` : ""}`}
-                loading="lazy"
                 height="420"
                 allowfullscreen
               />
@@ -83,7 +81,47 @@ const fmt = new Intl.DateTimeFormat("en", { day: "numeric", month: "long", year:
   <Footer num="" />
 </Base>
 
-<script is:inline async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<script>
+  // Embeds are heavy (~4 MB when all load at once), so each one only loads when it
+  // scrolls near the viewport. Items hidden by a filter never intersect, so never load.
+  type Twttr = { widgets: { load: (el?: Element) => Promise<unknown> } };
+  let widgets: Promise<Twttr> | undefined;
+  const loadWidgets = () =>
+    (widgets ??= new Promise<Twttr>((resolve, reject) => {
+      const s = document.createElement("script");
+      s.src = "https://platform.twitter.com/widgets.js";
+      s.async = true;
+      s.onload = () => {
+        const w = (window as unknown as { twttr: Twttr & { ready: (cb: (t: Twttr) => void) => void } }).twttr;
+        w.ready(resolve);
+      };
+      s.onerror = reject;
+      document.head.append(s);
+    }));
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const { isIntersecting, target } of entries) {
+        if (!isIntersecting) continue;
+        io.unobserve(target);
+        const el = target as HTMLElement;
+        if (el.dataset.embed === "linkedin") {
+          (el as HTMLIFrameElement).src = el.dataset.src!;
+        } else if (el.dataset.embed === "x") {
+          el.classList.add("twitter-tweet");
+          loadWidgets().then((t) => t.widgets.load(el.parentElement!)).catch(() => {});
+        }
+      }
+    },
+    { rootMargin: "300px 0px" },
+  );
+  // Start only after the page itself has loaded and gone idle, so embeds never compete
+  // with our own content for bandwidth or the main thread.
+  const start = () => document.querySelectorAll("[data-embed]").forEach((el) => io.observe(el));
+  const idle = () => ("requestIdleCallback" in window ? requestIdleCallback(start, { timeout: 1500 }) : setTimeout(start, 200));
+  if (document.readyState === "complete") idle();
+  else addEventListener("load", idle, { once: true });
+</script>
 
 <style>
   .page { padding-top: clamp(48px, 8vw, 96px); }
@@ -100,8 +138,8 @@ const fmt = new Intl.DateTimeFormat("en", { day: "numeric", month: "long", year:
   /* X renders a light-scheme iframe; on our dark page the browser paints it an
      opaque white backdrop that shows in the rounded corners. Match + clip. */
   .item :global(iframe[id^="twitter-widget"]) { color-scheme: light; border-radius: 12px; }
-  /* Pre-render fallback for the X embed (replaced once widgets.js loads). */
-  blockquote.twitter-tweet {
+  /* Placeholder for the X embed until it scrolls into range and widgets.js renders it. */
+  blockquote.x-embed {
     border: 1px solid #2f3336;
     border-radius: 12px;
     padding: 16px;
@@ -109,7 +147,7 @@ const fmt = new Intl.DateTimeFormat("en", { day: "numeric", month: "long", year:
     font-size: 15px;
     white-space: pre-line;
   }
-  blockquote.twitter-tweet a { color: var(--accent); }
+  blockquote.x-embed a { color: var(--accent); }
 
   iframe {
     display: block;

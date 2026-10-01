@@ -76,6 +76,12 @@ function excerpt(text: string, max: number): string {
   return cut.slice(0, Math.max(cut.lastIndexOf(" "), max - 20)).trimEnd() + "…";
 }
 
+/** The feed links full-size originals (~1 MB); Medium's resizer serves a 640px WebP (~20-50 KB). */
+function mediumImage(src: string | undefined): string | undefined {
+  const id = src?.split("/").pop();
+  return id ? `https://miro.medium.com/v2/resize:fit:640/format:webp/${id}` : undefined;
+}
+
 export async function fetchMedium(handle: string): Promise<Post[]> {
   const xml = await getText(`https://medium.com/feed/@${handle}`);
   const items = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)].map((m) => m[1]);
@@ -94,7 +100,7 @@ export async function fetchMedium(handle: string): Promise<Post[]> {
       date: new Date(tag(item, "pubDate")).toISOString(),
       title: decode(tag(item, "title")),
       text: excerpt(body, 320),
-      image: content.match(/<img[^>]+src="([^"]+)"/)?.[1],
+      image: mediumImage(content.match(/<img[^>]+src="([^"]+)"/)?.[1]),
       tags: [...item.matchAll(/<category>([\s\S]*?)<\/category>/g)].map((m) => cdata(m[1])).slice(0, 3),
       readingMinutes: Math.max(1, Math.round(words / 230)),
     };

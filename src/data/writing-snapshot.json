@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-01T09:40:19.179Z",
+  "fetchedAt": "2026-10-01T09:57:13.220Z",
   "posts": [
     {
       "platform": "linkedin",
@@ -106,7 +106,7 @@
       "date": "2023-04-18T03:57:37.000Z",
       "title": "Bringing Characters to Life: The Power of Generative Agents",
       "text": "Imagine a virtual world where you can interact with realistic characters that have their own personalities, preferences, and memories. They can talk to you, learn from you, and even invite you to their parties. Sounds like a sci-fi movie, right? Well, not anymore. A team of researchers from Stanford University and…",
-      "image": "https://cdn-images-1.medium.com/max/1024/1*yWK9naqFjcix4tWsLmruzQ.png",
+      "image": "https://miro.medium.com/v2/resize:fit:640/format:webp/1*yWK9naqFjcix4tWsLmruzQ.png",
       "tags": [
         "innovation",
         "simulation",
@@ -120,7 +120,7 @@
       "date": "2022-11-11T05:16:04.000Z",
       "title": "How to add Conversational UI in React Apps using Alan AI",
       "text": "“Hi Google, how’s the weather today?”, “Hey, Siri, remind me to call Smit at 9 pm.”, “Alexa, where is the closest restaurant?” You must have heard many people saying such sentences and asking questions, even you might have done the same. Clearly, voice tech has seen a huge rise in the past decade. However, the voice…",
-      "image": "https://cdn-images-1.medium.com/max/1024/1*hWxrQgzYRKUFOduY0aWjAg.png",
+      "image": "https://miro.medium.com/v2/resize:fit:640/format:webp/1*hWxrQgzYRKUFOduY0aWjAg.png",
       "tags": [
         "conversational-ui",
         "voice-assistant",

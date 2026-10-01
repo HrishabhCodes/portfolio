@@ -3,8 +3,7 @@ import Base from "../../layouts/Base.astro";
 import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
 import WritingCard from "../../components/WritingCard.astro";
-import ViewSwitch from "../../components/ViewSwitch.astro";
-import WritingFilters from "../../components/WritingFilters.astro";
+import WritingControls from "../../components/WritingControls.astro";
 import YearGroup from "../../components/YearGroup.astro";
 import { getPosts } from "../../lib/writing-data";
 import { groupByYear } from "../../lib/writing-group";
@@ -33,9 +32,7 @@ const pageUrl = new URL("/writing", Astro.site).href;
         Notes on AI agents, RAG, GEO and building things that hold up in production. Long reads on Medium,
         quick takes on LinkedIn and X.
       </p>
-      <ViewSwitch current="cards" />
-
-      <WritingFilters posts={posts} />
+      <WritingControls posts={posts} view="list" />
     </header>
 
     {groupByYear(posts).map(([year, list]) => (

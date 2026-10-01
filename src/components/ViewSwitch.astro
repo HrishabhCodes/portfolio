@@ -1,24 +1,34 @@
 ---
 interface Props {
-  current: "cards" | "embeds";
+  current: "list" | "embeds";
 }
 
 const { current } = Astro.props;
 const views = [
-  { key: "cards", label: "Cards", href: "/writing" },
-  { key: "embeds", label: "Embeds", href: "/writing/embeds" },
+  // 24×24 glyphs: stacked rows for the list, an uneven card grid for the embed masonry.
+  { key: "list", label: "List", href: "/writing", icon: "M3 4h3v3H3zM9 4.75h12v1.5H9zM3 10.5h3v3H3zM9 11.25h12v1.5H9zM3 17h3v3H3zM9 17.75h12v1.5H9z" },
+  { key: "embeds", label: "Embeds", href: "/writing/embeds", icon: "M3 3h8v10H3zM13 3h8v6h-8zM3 15h8v6H3zM13 11h8v10h-8z" },
 ];
 ---
 
 <nav class="switch" aria-label="Writing view">
   {views.map((v) => (
-    <a href={v.href} aria-current={v.key === current ? "page" : undefined}>{v.label}</a>
+    <a href={v.href} data-view-link aria-current={v.key === current ? "page" : undefined}>
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d={v.icon} /></svg>
+      {v.label}
+    </a>
   ))}
 </nav>
 
 <style>
-  .switch { display: inline-flex; margin-top: 28px; border: 1px solid var(--line); }
-  a { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; padding: 6px 12px; color: var(--muted); }
+  .switch { display: inline-flex; border: 1px solid var(--line); }
+  a { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; padding: 8px 14px; color: var(--muted); text-align: center; }
+  .icon { width: 13px; height: 13px; fill: currentColor; flex: none; }
   a:hover { color: var(--fg); }
   a[aria-current="page"] { background: var(--fg); color: var(--accent-ink); }
+
+  @media (max-width: 640px) {
+    .switch { display: flex; }
+    a { flex: 1; padding: 11px 14px; }
+  }
 </style>
