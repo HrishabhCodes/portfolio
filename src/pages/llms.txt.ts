@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { profile, metaDescription, introText, socials, faq } from "../data/profile";
+import { profile, bio, introText, socials, faq } from "../data/profile";
 import { experience, formatMonth } from "../data/experience";
 import { projects } from "../data/projects";
 import { stack } from "../data/stack";
@@ -12,7 +12,7 @@ export const GET: APIRoute = async () => {
   const lines = [
     `# ${profile.name}`,
     "",
-    `> ${metaDescription}`,
+    `> ${bio}`,
     "",
     introText,
     "",

@@ -24,8 +24,11 @@ export const profile = {
   years,
 };
 
-/** Meta description: ~155 chars, front-loaded with who + what + where. */
-export const metaDescription = `Hrishabh Jain is an AI Engineer in Bengaluru building multi-agent systems, RAG pipelines and MCP integrations at CambrianEdge.ai. ${years} years in production.`;
+/** Search/share snippet: first person and plain, like most AI engineers' sites (~155 chars). */
+export const metaDescription = "I build AI agents and RAG systems that hold up in production, with the evals and observability to prove it. AI Engineer at CambrianEdge.ai, Bengaluru.";
+
+/** Third-person entity statement for JSON-LD and llms.txt, which answer engines quote as fact. */
+export const bio = `Hrishabh Jain is an AI Engineer in Bengaluru, India, building AI agents, RAG pipelines, evals and observability for production AI at CambrianEdge.ai. ${years} years shipping production software.`;
 
 /**
  * The intro paragraph. Inline markup is intentional: <mark> = accent highlight,
