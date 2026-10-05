@@ -1,4 +1,4 @@
-import { profile, metaDescription, socials, faq } from "../data/profile";
+import { profile, bio, socials, faq } from "../data/profile";
 import { experience } from "../data/experience";
 import { education, certifications } from "../data/education";
 import { allSkills } from "../data/stack";
@@ -19,7 +19,7 @@ export function buildJsonLd(imageUrl: string, now = new Date()) {
     familyName: profile.familyName,
     alternateName: profile.handle,
     jobTitle: profile.jobTitle,
-    description: metaDescription,
+    description: bio,
     url: SITE,
     image: imageUrl,
     email: `mailto:${profile.email}`,

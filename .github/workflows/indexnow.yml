@@ -1,6 +1,8 @@
 # Notify IndexNow (Bing, Yandex, Seznam, Naver, Yep; Bing powers ChatGPT search and
 # Copilot) after every successful production deploy, so changed pages get recrawled fast.
 # Runs on Vercel's GitHub deployment status, i.e. only once the new version is live.
+# With several Vercel projects on one repo the environment is named "Production – <project>",
+# so match by prefix. Preview deploys (branches) are skipped on purpose.
 name: IndexNow
 
 on:
@@ -12,7 +14,7 @@ jobs:
     if: >-
       github.event_name == 'workflow_dispatch' ||
       (github.event.deployment_status.state == 'success' &&
-       github.event.deployment.environment == 'Production')
+       startsWith(github.event.deployment.environment, 'Production'))
     runs-on: ubuntu-latest
     env:
       HOST: hrishabh.in
