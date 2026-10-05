@@ -35,6 +35,10 @@ The text, date, image and reactions are fetched at build time. Add `title`, `tex
 - `bun run github:snapshot`: refresh the committed GitHub fallback snapshot.
 - `bun run writing:snapshot`: refresh the committed writing fallback snapshot (run after adding posts).
 
+## IndexNow
+
+`.github/workflows/indexnow.yml` pings IndexNow (Bing, which also powers ChatGPT search and Copilot, plus Yandex, Seznam, Naver and Yep) with every sitemap URL after each successful production deploy. The key is public by design and lives in `public/<key>.txt`; it must match `KEY` in the workflow. Google doesn't support IndexNow, so use Search Console for Google.
+
 ## Deploy setup (one-time)
 
 1. Vercel → Settings → Environment Variables: add `GITHUB_TOKEN`, a fine-grained token with **public repo read-only** access. It gives exact contribution data and avoids rate limits.
