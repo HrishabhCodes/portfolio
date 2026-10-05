@@ -16,7 +16,7 @@ const pageUrl = new URL("/writing", Astro.site).href;
 
 <Base
   title="Hrishabh Jain · Writing"
-  description="Articles and posts by Hrishabh Jain on AI agents, RAG, generative engine optimization (GEO) and shipping AI to production, from Medium, LinkedIn and X."
+  description="Articles and posts by Hrishabh Jain on AI agents, RAG, evals, observability and shipping AI to production, from Medium, LinkedIn and X."
   ogType="website"
   graph={buildWritingJsonLd(posts, pageUrl)}
 >
@@ -29,7 +29,7 @@ const pageUrl = new URL("/writing", Astro.site).href;
       </p>
       <h1>Writing<span class="dot">.</span></h1>
       <p class="lede">
-        Notes on AI agents, RAG, GEO and building things that hold up in production. Long reads on Medium,
+        Notes on AI agents, RAG, evals, observability and building things that hold up in production. Long reads on Medium,
         quick takes on LinkedIn and X.
       </p>
       <WritingControls posts={posts} view="list" />
