@@ -35,7 +35,7 @@ export const GET: APIRoute = async () => {
     ...projects.map((p) => `- ${p.name} (${p.year}): ${p.description} Built with ${p.stack.join(", ")}.`),
     "",
     "## Writing",
-    `All writing: ${profile.url}/writing`,
+    `All writing: ${profile.url}/writing/`,
     ...posts.map((p) => `- [${p.title ?? p.text.split("\n")[0].slice(0, 90)}](${p.url}) (${PLATFORM_LABEL[p.platform]}, ${p.date.slice(0, 10)})`),
     "",
     "## Skills",

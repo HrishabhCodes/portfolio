@@ -10,7 +10,7 @@ import { groupByYear } from "../../lib/writing-group";
 import { buildWritingJsonLd } from "../../lib/schema";
 
 const posts = await getPosts();
-const pageUrl = new URL("/writing", Astro.site).href;
+const pageUrl = new URL("/writing/", Astro.site).href;
 
 ---
 
