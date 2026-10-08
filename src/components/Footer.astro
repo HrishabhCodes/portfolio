@@ -35,7 +35,7 @@ const updated = new Intl.DateTimeFormat("en", { day: "numeric", month: "short", 
   </div>
 
   <div class="base label">
-    <span><span class="nw">© {year} {profile.name}</span> · <span class="nw">{profile.location.city}, {profile.location.country}</span></span>
+    <span>© {year} {profile.name} · {profile.location.city}, {profile.location.country}</span>
     <span>Last built {updated}</span>
   </div>
 
@@ -115,13 +115,11 @@ const updated = new Intl.DateTimeFormat("en", { day: "numeric", month: "short", 
     border-top: 1px solid var(--line);
   }
 
-  .nw { white-space: nowrap; }
-
   @media (max-width: 640px) {
     .actions { flex-direction: column; align-items: stretch; gap: 28px; margin-top: 32px; }
     .email { display: flex; padding: 16px 18px; }
     .socials { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 20px; }
-    .base { flex-direction: column; gap: 6px; }
+    .base { flex-direction: column; align-items: center; gap: 6px; text-align: center; letter-spacing: 0.06em; text-wrap: balance; }
   }
 
   .toast {
