@@ -4,7 +4,8 @@ import { faq } from "../data/profile";
 ---
 
 <Section id="faq" num="08" title="FAQ" label="quick answers">
-  <dl class="faq">
+  <!-- Keeps Google from lifting the third-person answers as the search snippet. -->
+  <dl class="faq" data-nosnippet>
     {faq.map((f, i) => (
       <div class="item" data-reveal>
         <dt><span class="n" aria-hidden="true">Q{i + 1}</span>{f.q}</dt>
