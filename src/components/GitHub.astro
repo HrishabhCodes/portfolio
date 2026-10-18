@@ -5,7 +5,6 @@ import { getGitHubData } from "../lib/github-data";
 const gh = await getGitHubData();
 const profileUrl = `https://github.com/${gh.username}`;
 const nf = new Intl.NumberFormat("en-IN");
-const monthYear = new Intl.DateTimeFormat("en", { month: "short", year: "numeric", timeZone: "UTC" });
 
 const stats = [
   { k: "Contributions · last year", v: nf.format(gh.contributions.total) },
@@ -51,26 +50,6 @@ const asOf = days.at(-1)?.date ?? gh.fetchedAt.slice(0, 10);
       <span class="legend" aria-hidden="true">Less <i class="l0" /><i class="l1" /><i class="l2" /><i class="l3" /><i class="l4" /> More</span>
     </figcaption>
   </figure>
-
-  {gh.recent.length > 0 && (
-    <div class="recent" data-reveal>
-      <h3 class="label">Recently pushed</h3>
-      <ul>
-        {gh.recent.map((r) => (
-          <li>
-            <a href={r.url} target="_blank" rel="noopener">
-              <span class="repo">{r.name}<span class="arrow" aria-hidden="true">↗</span></span>
-              <span class="desc">{r.description ?? "No description, just vibes and commits."}</span>
-              <span class="meta label">
-                {r.language && <span>{r.language}</span>}
-                <span>Updated <time datetime={r.pushedAt}>{monthYear.format(new Date(r.pushedAt))}</time></span>
-              </span>
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
-  )}
 </Section>
 
 <style>
@@ -122,27 +101,6 @@ const asOf = days.at(-1)?.date ?? gh.fetchedAt.slice(0, 10);
   .legend { display: inline-flex; align-items: center; gap: 4px; }
   .legend i { width: 10px; }
 
-  .recent { margin-top: 48px; }
-  .recent ul {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
-    margin-top: 12px;
-    border-top: 1px solid var(--line);
-  }
-  .recent li { border-bottom: 1px solid var(--line); }
-  .recent a {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    height: 100%;
-    padding: 18px 16px 18px 0;
-    transition: background 0.2s ease;
-  }
-  .recent a:hover { background: var(--bg-2); }
-  .repo { font-size: 17px; font-weight: 700; letter-spacing: -0.02em; }
-  .arrow { color: var(--accent); margin-left: 6px; font-size: 0.8em; }
-  .desc { color: var(--fg-2); font-size: 15px; }
-  .meta { display: flex; gap: 14px; margin-top: auto; padding-top: 6px; }
 
   @media (max-width: 560px) {
     .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
